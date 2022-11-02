@@ -6,7 +6,7 @@
 
 //External imports
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Text } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 // import { Text } from 'react-native';
 import IonIcons from 'react-native-vector-icons/Ionicons';
@@ -45,7 +45,7 @@ export const CreateScreen = ({navigation}) => {
         {
           id: "1",
           organizationId: "0684348415",
-          name: "Project 2",
+          name: "BYU independant research",
           description: "This is project 2",
           type: "Survey",
           createdAt: "2020-01-01",
@@ -66,7 +66,7 @@ export const CreateScreen = ({navigation}) => {
         {
           id: "2",
           organizationId: "0684348415",
-          name: "Project 3",
+          name: "NPS survey",
           description: "This is project 3",
           type: "Survey",
           createdAt: "2020-01-01",
@@ -87,7 +87,7 @@ export const CreateScreen = ({navigation}) => {
         {
           id: "3",
           organizationId: "0684348415",
-          name: "Project 4",
+          name: "Who are Doctors?",
           description: "This is project 4",
           type: "Survey",
           createdAt: "2020-01-01",
@@ -108,7 +108,7 @@ export const CreateScreen = ({navigation}) => {
         {
           id: "4",
           organizationId: "0684348415",
-          name: "Project 5",
+          name: "Take on me",
           description: "This is project 5",
           type: "Survey",
           createdAt: "2020-01-01",
@@ -132,7 +132,7 @@ export const CreateScreen = ({navigation}) => {
         {
           id: 0,
           index: 0,
-          name: "Project",
+          name: "Survey",
           accessor: "name",
           enabled: true,
           cell_style: null,
@@ -156,6 +156,7 @@ export const CreateScreen = ({navigation}) => {
       ];
 
       const [showSettings, setShowSettings] = useState(false);
+      const [activeProject, setActiveProject] = useState();
     
     return (
         <View style={styles.sectionContainer}>
@@ -172,9 +173,10 @@ export const CreateScreen = ({navigation}) => {
                 </Pressable>
                 {/* <AntDesign name='windows'></AntDesign> */}
                 <ButtonGeneric onPress={() => alert('This is the Create Survey Screen.')} title='Create Survey'></ButtonGeneric>
+                
             </View>
-            <ReactionTable headers={headers} items={projects} showSettings={showSettings} setShowSettings={setShowSettings}></ReactionTable>
-            {showSettings && <ProjectSettings setShowSettings={setShowSettings}></ProjectSettings>}
+            <ReactionTable headers={headers} items={projects} showSettings={showSettings} setShowSettings={setShowSettings} setActive={setActiveProject} activeItem={activeProject}></ReactionTable>
+            {showSettings && <ProjectSettings setShowSettings={setShowSettings} project={activeProject}></ProjectSettings>}
             
         </View>
     );

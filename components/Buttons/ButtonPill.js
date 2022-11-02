@@ -13,7 +13,7 @@ import { Pressable, Text, StyleSheet } from 'react-native';
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const ButtonGeneric = ({ title, onPress }) => {
+export const ButtonPill = ({ title, onPress }) => {
 
 
     return (
@@ -35,32 +35,31 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 12,
-        paddingHorizontal: 32,
-        borderRadius: 4,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: 40,
         elevation: 3,
-        backgroundColor: '#15BCC7',
+        backgroundColor: '#ECFBFC',
         borderWidth: 3,
-        borderColor: '#15BCC7',
-        // zIndex: 1,
+        borderColor: '#ECFBFC',
     },
     buttonPressed: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 12,
-        paddingHorizontal: 32,
-        borderRadius: 4,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: 40,
         elevation: 3,
-        backgroundColor: 'white',
+        backgroundColor: '#ECFBFC',
         borderWidth: 3,
-        borderColor: '#15BCC7',
+        borderColor: '#ECFBFC',
     },
     text: {
         fontSize: 16,
         lineHeight: 21,
         fontWeight: 'bold',
         letterSpacing: 0.25,
-        color: 'white',
+        color: '#15BCC7',
     },
     textPressed: {
         fontSize: 16,

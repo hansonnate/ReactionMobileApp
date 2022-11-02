@@ -6,7 +6,7 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
 
-export const ReactionTable = ({headers, items, showSettings, setShowSettings}) => {
+export const ReactionTable = ({headers, items, showSettings, setShowSettings, setActive}) => {
 
 
 
@@ -30,7 +30,7 @@ export const ReactionTable = ({headers, items, showSettings, setShowSettings}) =
                   {header.name == 'Status' && <View style={row[header.accessor] == 'Open' ? styles.statusContainerOpen : row[header.accessor] == 'Closed' ? styles.statusContainerClosed : styles.statusContainerDraft}><Text style={row[header.accessor] == 'Open' ? styles.statusOpen : row[header.accessor] == 'Closed' ? styles.statusClosed : styles.statusDraft}>{row[header.accessor]}</Text></View>}
                 </DataTable.Cell>
               )}
-              <DataTable.Cell style={styles.settingsCell}><Pressable onPress={() => setShowSettings(!showSettings)} title='Create Survey'><IonIcons name='ellipsis-vertical-outline'></IonIcons></Pressable></DataTable.Cell>
+              <DataTable.Cell style={styles.settingsCell}><Pressable onPress={() => {setShowSettings(!showSettings); setActive(row);}} title='Create Survey'><IonIcons name='ellipsis-vertical-outline'></IonIcons></Pressable></DataTable.Cell>
             </DataTable.Row>
           )}
         </DataTable>
