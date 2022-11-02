@@ -56,7 +56,8 @@ export const ReactionSelectInput = ({ placeholder, label, chosenList, chooseList
                 {!chosenList &&  <Text>Add List to Props</Text>}
                 <Pressable onPress={() => setShowSelect(!showSelect)}><IonIcons name='caret-down' size={17} style={{color: '#A3A4A8'}}></IonIcons></Pressable>
             </View>
-            {showSelect && chooseList && <ScrollView style={styles.chooseContainer}>{chooseList.map((item) => <Pressable onPress={() => handleSelect(item)}>{({ pressed }) => (<Text key={item.id} style={pressed ? styles.chooseItemPressed : styles.chooseItem}>{item.name}</Text>)}</Pressable>)}</ScrollView>}
+            {showSelect && chooseList && chooseList.length > 0 && <ScrollView style={styles.chooseContainer}>{chooseList.map((item) => <Pressable onPress={() => handleSelect(item)}>{({ pressed }) => (<Text key={item.id} style={pressed ? styles.chooseItemPressed : styles.chooseItem}>{item.name}</Text>)}</Pressable>)}</ScrollView>}
+            {showSelect && chooseList && chooseList.length === 0 && <ScrollView style={styles.chooseContainer}><Text>No more to choose from</Text></ScrollView>}
         </View>
     );
 

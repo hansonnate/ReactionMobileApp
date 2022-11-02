@@ -29,7 +29,7 @@ export const ProjectSettings = ({ setShowSettings, project }) => {
         { id: 3, name: "jul-BYU-2022" },
     ]
     const chosenTags = [
-        { id: 0, name: "jan-BYU-2022" },
+        { id: 4, name: "jan-BYU-2022" },
     ]
     const newAccessGroups = [
         { id: 0, name: "No Jeremy" },
@@ -38,7 +38,7 @@ export const ProjectSettings = ({ setShowSettings, project }) => {
         { id: 3, name: "Ur Mom" },
     ]
     const chosenAccessGroups = [
-        { id: 0, name: "All Staff" },
+        { id: 4, name: "All Staff" },
     ]
     const newAudiences = [
         { id: 0, name: "Doctors" },
@@ -47,7 +47,16 @@ export const ProjectSettings = ({ setShowSettings, project }) => {
         { id: 3, name: "Misc" },
     ]
     const chosenAudiences = [
-        { id: 0, name: "Doctors 2.0" },
+        { id: 4, name: "Doctors 2.0" },
+    ]
+    const newLanguages = [
+        { id: 0, name: "Español" },
+        { id: 1, name: "Turkish" },
+        { id: 2, name: "German" },
+        { id: 3, name: "French" },
+    ]
+    const chosenLanguages = [
+        { id: 4, name: "English" },
     ]
 
 
@@ -58,6 +67,10 @@ export const ProjectSettings = ({ setShowSettings, project }) => {
     const [accessGroups, setAccessGroups] = useState(newAccessGroups);
     const [selectedAudiences, onSelectedAudienceChange] = useState(chosenAudiences);
     const [audiences, setAudiences] = useState(newAudiences);
+    const [selectedDefLang, onSelectedDefLangChange] = useState(chosenLanguages);
+    const [defaultLanguages, setDefaultLanguages] = useState(newLanguages);
+    const [selectedSupLang, onSelectedSupLangChange] = useState(chosenLanguages);
+    const [supportedLanguages, setSupportedLanguages] = useState(newLanguages);
   
     return (
         <View style={styles.sectionContainer}>
@@ -68,8 +81,8 @@ export const ProjectSettings = ({ setShowSettings, project }) => {
                 <ReactionSelectInput chosenList={selectedTags} chooseList={tags} label={"Tags"} placeholder={"No Tags Chosen"} value={project?.description} setChosen={onSelectedItemsChange} setChooseList={setTags}></ReactionSelectInput>
                 <ReactionSelectInput chosenList={selectedAccessGroups} chooseList={accessGroups} label={"Access Groups"} placeholder={"No Access Groups Chosen"} value={project?.description} setChosen={onSelectedAGChange} setChooseList={setAccessGroups}></ReactionSelectInput>
                 <ReactionSelectInput chosenList={selectedAudiences} chooseList={audiences} label={"Audiences"} placeholder={"No Audiences Chosen"} value={project?.description} setChosen={onSelectedAudienceChange} setChooseList={setAudiences}></ReactionSelectInput>
-                <ReactionSelectInput chosenList={selectedTags} chooseList={tags} label={"Default Languages"} placeholder={"No Default Languages Chosen"} value={project?.description} setChosen={onSelectedItemsChange} setChooseList={setTags}></ReactionSelectInput>
-                <ReactionSelectInput chosenList={selectedTags} chooseList={tags} label={"Supported Languages"} placeholder={"No Supported Languages Chosen"} value={project?.description} setChosen={onSelectedItemsChange} setChooseList={setTags}></ReactionSelectInput>
+                <ReactionSelectInput chosenList={selectedDefLang} chooseList={defaultLanguages} label={"Default Languages"} placeholder={"No Default Languages Chosen"} value={project?.description} setChosen={onSelectedDefLangChange} setChooseList={setDefaultLanguages}></ReactionSelectInput>
+                <ReactionSelectInput chosenList={selectedSupLang} chooseList={supportedLanguages} label={"Supported Languages"} placeholder={"No Supported Languages Chosen"} value={project?.description} setChosen={onSelectedSupLangChange} setChooseList={setSupportedLanguages}></ReactionSelectInput>
                 <View style={{ paddingHorizontal: 60, paddingTop: 10 }}><ButtonGeneric onPress={() => { Alert.alert('Changes Saved!'); setShowSettings(false); }} title='Save Changes'></ButtonGeneric></View>
                 <View style={styles.bottomButtons}>
                     <ButtonPill onPress={() => Alert.prompt('Are you sure you want to delete this survey?\n(Enter \'Delete\' to confirm)')} title='Delete Survey'></ButtonPill>
@@ -85,9 +98,8 @@ const styles = StyleSheet.create({
     sectionContainer: {
         position: 'absolute',
         top: 30,
-        flex: 1,
-        width: '95%',
-        marginHorizontal: 20,
+        width: '100%',
+        marginHorizontal: 10,
         backgroundColor: "white",
         padding: 10,
         // marginHorizontal: 20,

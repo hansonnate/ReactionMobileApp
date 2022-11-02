@@ -167,7 +167,7 @@ export const CreateScreen = ({navigation}) => {
                     {({ pressed }) => (
                         <View style={styles.actionTextContainer}> 
                             <Text style={pressed ? styles.actionTextPressed : styles.actionText}>Actions {' '}</Text>
-                            <IonIcons name='chevron-down' size={20} style={{color: '#A3A4A8'}}></IonIcons>
+                            <View><IonIcons name='chevron-down' size={20} style={{color: '#A3A4A8'}}></IonIcons></View>
                         </View>
                     )}
                 </Pressable>
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         paddingBottom: 10,
 
     },
@@ -214,18 +214,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     actionButton: {
+        flex: .8,
         borderColor: "#E9E9E9",
         backgroundColor: "white",
         borderRadius: 5,
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 10,
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
         borderRadius: 4,
         elevation: 3,
         borderWidth: 3,
     },
     actionButtonPressed: {
+      flex: .8,
         borderColor: "#E9E9E9",
         borderRadius: 5,
         backgroundColor: '#E9E9E9',
@@ -241,20 +244,22 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 21,
         fontWeight: 'bold',
-        letterSpacing: 0.25,
+        // letterSpacing: 0.25,
         color: "#A3A4A8",
     },
     actionTextPressed: {
         fontSize: 16,
         lineHeight: 21,
         fontWeight: 'bold',
-        letterSpacing: 0.25,
+        // letterSpacing: 0.25,
         color: "white",
     },
     actionTextContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        // borderWidth: 2,
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      width: '100%',
         // borderColor: 'blue',
     },
 });
