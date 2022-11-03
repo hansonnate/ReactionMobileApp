@@ -19,6 +19,7 @@ import { ResultsScreen } from './screens/ResultsScreen';
 import { OrgDetailsScreen } from './screens/OrgDetailsScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 import { DeliverScreen } from './screens/DeliverScreen';
+// import { QuestionsScreen } from './screens/QuestionsScreen';
 import { View } from 'react-native';
 
 //Screen Names
@@ -27,6 +28,7 @@ const resultsScreenName = 'Results';
 const orgDetailsScreenName = 'OrgDetails';
 const settingsScreenName = 'Settings';
 const deliverScreenName = 'Deliver';
+// const questionsScreenName = 'Questions';
 
 const Tab = createBottomTabNavigator();
 
@@ -35,7 +37,7 @@ export const MainContainer = () => {
 
 
     return (
-        <NavigationContainer >
+        <NavigationContainer style={{padding: 10}}>
             <View style={{marginTop: 40}}></View>
             <Tab.Navigator
                 initialRouteName={createScreenName}
@@ -79,6 +81,7 @@ export const MainContainer = () => {
                 <Tab.Screen name={orgDetailsScreenName} component={OrgDetailsScreen}/>
                 <Tab.Screen name={resultsScreenName} component={ResultsScreen}/>
                 <Tab.Screen name={settingsScreenName} component={SettingsScreen}/>
+                {/* <Tab.Screen name={questionsScreenName} component={QuestionsScreen}/> */}
                 
             </Tab.Navigator>
         </NavigationContainer>
