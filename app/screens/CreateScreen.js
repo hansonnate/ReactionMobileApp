@@ -263,6 +263,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     // letterSpacing: 0.25,
     color: "#A3A4A8",
+    fontFamily: 'Gill Sans',
   },
   actionTextPressed: {
     fontSize: 16,
@@ -270,6 +271,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     // letterSpacing: 0.25,
     color: "white",
+    fontFamily: 'Gill Sans',
   },
   actionTextContainer: {
     display: 'flex',

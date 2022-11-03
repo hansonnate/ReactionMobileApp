@@ -53,6 +53,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderColor: "#E9E9E9",
         padding: 10,
+        fontFamily: 'Gill Sans',
+        color: '#616565',
+        fontSize: 18,
     },
     inputChanged: {
         height: 40,
@@ -60,6 +63,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderColor: "#F4E3C2",
         padding: 10,
+        fontFamily: 'Gill Sans',
+        color: '#616565',
+        fontSize: 18,
     },
     label: {
         paddingLeft: 10,

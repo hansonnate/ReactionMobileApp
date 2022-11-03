@@ -37,7 +37,7 @@ export const MainContainer = () => {
 
 
     return (
-        <NavigationContainer style={{padding: 10}}>
+        <NavigationContainer>
             <View style={{marginTop: 40}}></View>
             <Tab.Navigator
                 initialRouteName={createScreenName}
@@ -62,9 +62,10 @@ export const MainContainer = () => {
                     },
                     tabBarActiveTintColor: '#2A627C',
                     inactiveTintColor: 'grey',
-                    tabBarLabelStyle: { fontSize: 13},
-                    tabBarStyle: { padding: 5, height: 90},
+                    tabBarLabelStyle: { fontSize: 13, fontFamily: 'Gill Sans'},
+                    tabBarStyle: { padding: 5, height: 90, },
                     headerShown: false,
+                    
                 })}
                 
                 // screenOptions={{
@@ -76,7 +77,7 @@ export const MainContainer = () => {
                 // }}
                 
                 >
-                <Tab.Screen name={createScreenName} component={CreateScreen}/>
+                <Tab.Screen name={createScreenName} component={CreateScreen} />
                 <Tab.Screen name={deliverScreenName} component={DeliverScreen}/>
                 <Tab.Screen name={orgDetailsScreenName} component={OrgDetailsScreen}/>
                 <Tab.Screen name={resultsScreenName} component={ResultsScreen}/>

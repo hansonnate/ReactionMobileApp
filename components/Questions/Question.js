@@ -9,6 +9,7 @@ import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import { ReactionActiveTextInput } from '../TextInput/ReactionActiveTextInput';
+import { TextQuestion } from './Types/TextQuestion';
 // import { Text } from 'react-native';
 
 //Internal imports
@@ -22,6 +23,7 @@ export const Question = ({question, active, setActive}) => {
         <View style={active ? styles.sectionContainerActive : styles.sectionContainer}>
             <ReactionActiveTextInput value={question.name} active={active} label={'Question'}>{question.name}</ReactionActiveTextInput>
             <ReactionActiveTextInput italics value={question.description} active={active} label={'Instructions'}>{question.name}</ReactionActiveTextInput>
+            {question.type == "Text" && <TextQuestion active={active}></TextQuestion>}
         </View>
         </Pressable>
     );
@@ -36,6 +38,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderWidth: 2,
         borderColor: '#E9E9E9',
+        borderRadius: 5,
         backgroundColor: 'white',
         marginHorizontal: 10,
         marginBottom: 10
@@ -47,6 +50,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderWidth: 2,
         borderColor: '#B5E1DF',
+        borderRadius: 5,
         backgroundColor: 'white',
         marginHorizontal: 10,
         marginBottom: 10

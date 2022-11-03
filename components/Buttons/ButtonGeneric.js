@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         letterSpacing: 0.25,
         color: 'white',
+        fontFamily: 'Gill Sans',
     },
     textPressed: {
         fontSize: 16,
@@ -68,5 +69,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         letterSpacing: 0.25,
         color: '#15BCC7',
+        fontFamily: 'Gill Sans',
     },
 });

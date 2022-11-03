@@ -37,7 +37,8 @@ export const ReactionActiveTextInput = ({ placeholder, label, value, active, ita
                 // keyboardType="number-pad"
             />}
             {!active && <Text
-                style={`${styles.input} ${italics ? styles.italics : ''}`}
+                style={italics ? styles.italics : styles.input}
+                // style={{fontFamily: 'futura'}}
                 // onChangeText={handleChange}
                 // value={text}
                 // placeholder={placeholder ? placeholder : "Enter..."}
@@ -60,9 +61,15 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderColor: "#E9E9E9",
         padding: 10,
+        fontFamily: 'Gill Sans',
+        color: '#616565',
+        fontSize: 18,
     },
     input: {
         height: 20,
+        fontFamily: 'Gill Sans',
+        color: '#616565',
+        fontSize: 20,
         // fontStyle: 'italic'
         // borderWidth: 2,
         // borderRadius: 5,
@@ -75,11 +82,15 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 10,
         color: '#738C91',
+        fontFamily: 'Gill Sans',
     },
     changedAlert: {
         color: '#F4E3C2',
     },
     italics: {
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        fontFamily: 'Gill Sans',
+        color: '#616565',
+        fontSize: 15,
     }
 });
