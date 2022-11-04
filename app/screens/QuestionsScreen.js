@@ -6,10 +6,13 @@
 
 //External imports
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ScrollView} from 'react-native';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import { ButtonAddMinus } from '../../components/Buttons/ButtonAddMinus';
 // import { ButtonPill } from '../../components/Buttons/ButtonPill';
 import { ButtonPillBack } from '../../components/Buttons/ButtonPillBack';
 import { Question } from '../../components/Questions/Question';
+import IonIcons from 'react-native-vector-icons/Ionicons';
 // import { Text } from 'react-native';
 
 //Internal imports
@@ -75,7 +78,18 @@ export const QuestionsScreen = ({survey, setPage}) => {
             <ScrollView>
                 {questions.map((question) => <Question question={question} active={question.id === activeQuestionId} setActive={setActiveQuestionId}></Question>)}    
             </ScrollView> 
-            <View></View>
+            <View style={styles.bottomButtons}>
+                <ButtonAddMinus title={'question'} plus onPress={() => alert('Added Question')}></ButtonAddMinus>
+                <Pressable style={styles.actionButton}><View style={styles.bottomButtons}><Text style={styles.text}>actions</Text><IonIcons name='chevron-down' size={20} style={{ color: '#A3A4A8' }}></IonIcons></View></Pressable>
+            </View>
+            <View style={styles.bottomButtons}>
+                {/* <ButtonAddMinus title={'question'} plus onPress={() => alert('Added Question')}></ButtonAddMinus> */}
+                <ButtonAddMinus title={'page'} minus onPress={() => alert('Added Question')}></ButtonAddMinus>
+                <ButtonAddMinus title={'page'} plus onPress={() => alert('Added Question')}></ButtonAddMinus>
+                <Pressable style={styles.buttonStyle}><IonIcons name='chevron-back' size={20} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
+                <Pressable style={styles.buttonStyle}><Text style={{color: '#A3A4A8', fontWeight: 'bold'}}>1</Text></Pressable>
+                <Pressable style={styles.buttonStyle}><IonIcons name='chevron-forward' size={20} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
+            </View>
         </View>
     );
 
@@ -97,5 +111,41 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 20,
         paddingVertical: 10,
+    },
+    bottomButtons: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+    },
+    buttonStyle: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderRadius: 5,
+        borderColor: '#E9E9E9',
+        backgroundColor: 'white',
+        width: 35,
+    },
+    actionButton: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderRadius: 5,
+        borderColor: '#E9E9E9',
+        backgroundColor: 'white',
+        width: 110,
+    },
+    text: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#A3A4A8',
+        marginRight: 5,
     },
 });
