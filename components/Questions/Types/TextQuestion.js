@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         height: 90,
         padding: 10,
         fontFamily: 'Gill Sans',
-        color: 'black',
+        color: '#616565',
         fontSize: 17,
     },
     textStaticStyle: {

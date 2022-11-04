@@ -43,7 +43,7 @@ export const ReactionActiveTextInput = ({ placeholder, label, value, active, ita
                 // value={text}
                 // placeholder={placeholder ? placeholder : "Enter..."}
                 // keyboardType="number-pad"
-            > {text}</Text>}
+            >{text}</Text>}
         </View>
     );
 
@@ -66,10 +66,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     input: {
-        height: 20,
+        // height: 20,
         fontFamily: 'Gill Sans',
         color: '#616565',
         fontSize: 20,
+        // overflow: 'visible',
         // fontStyle: 'italic'
         // borderWidth: 2,
         // borderRadius: 5,

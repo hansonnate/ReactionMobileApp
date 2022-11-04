@@ -9,6 +9,7 @@ import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import { ReactionActiveTextInput } from '../TextInput/ReactionActiveTextInput';
+import { MultipleChoiceQuestion } from './Types/MutlipleChoiceQuestion';
 import { ScaleQuestion } from './Types/ScaleQuestion';
 import { TextQuestion } from './Types/TextQuestion';
 // import { Text } from 'react-native';
@@ -26,6 +27,7 @@ export const Question = ({question, active, setActive}) => {
             <ReactionActiveTextInput italics value={question.description} active={active} label={'Instructions'}>{question.name}</ReactionActiveTextInput>
             {question.type == "Text" && <TextQuestion active={active} textQuestion={question.textQuestion}></TextQuestion>}
             {question.type == "NumberScale" && <ScaleQuestion active={active} scaleQuestion={question.scaleQuestion}></ScaleQuestion>}
+            {question.type == "MultipleChoice" && <MultipleChoiceQuestion active={active} choiceQuestion={question.choiceQuestion}></MultipleChoiceQuestion>}
         </View>
         </Pressable>
     );
