@@ -7,20 +7,28 @@
 //External imports
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { ButtonAddMinus } from '../../Buttons/ButtonAddMinus';
 import { ReactionTextInput } from '../../TextInput/ReactionTextInput';
-// import { Text } from 'react-native';
+import IonIcons from 'react-native-vector-icons/Ionicons';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const MultipleChoiceQuestion = ({active, choiceQuestion, textQuestion}) => {
+export const MultipleChoiceQuestion = ({ active, choiceQuestion }) => {
 
 
     return (
-        <View style={{paddingTop: 5}}>
+        <View style={{ paddingTop: 5 }}>
             {active && <Text style={styles.label}>CHOICES</Text>}
-            {active && choiceQuestion.choices.map((value, index) => <ReactionTextInput key={index} value={value}></ReactionTextInput>)}
+            {active && choiceQuestion.choices.map((value, index) => <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{width: '94%'}}><ReactionTextInput key={index} value={value}></ReactionTextInput></View>
+                <Pressable onPress={() => alert("Delete Choice")} style={styles.closeIcon}>
+                    <IonIcons name='close' size={20} style={{ color: '#A3A4A8' }}></IonIcons>
+                </Pressable>
+            </View>)}
             {!active && choiceQuestion.choices.map((value, index) => <Text key={index} style={styles.textNotActive}>{value}</Text>)}
+            {active && <View style={{ display: 'flex', flexDirection: 'row', paddingTop: 5 }}><ButtonAddMinus title={'add choice'} plus onPress={() => alert("Add Choice")}></ButtonAddMinus></View>}
         </View>
     );
 
@@ -67,4 +75,7 @@ const styles = StyleSheet.create({
         color: '#616565',
         fontSize: 17,
     },
+    closeIcon: {
+        padding: 5
+    }
 });

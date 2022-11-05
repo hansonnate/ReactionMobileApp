@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'column',
-        paddingBottom: 5,
+        paddingVertical: 2.5,
     },
     input: {
         // height: 45,

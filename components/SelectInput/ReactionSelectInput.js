@@ -16,7 +16,7 @@ import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const ReactionSelectInput = ({ placeholder, label, chosenList, chooseList, setChosen, setChooseList }) => {
+export const ReactionSelectInput = ({ placeholder, label, chosenList, chooseList, setChosen, setChooseList, chosenSingle, isMultiple, setChosenSingle }) => {
 
     const [changed, setChanged] = useState(false);
     const [showSelect, setShowSelect] = useState(false);
@@ -24,15 +24,20 @@ export const ReactionSelectInput = ({ placeholder, label, chosenList, chooseList
 
 
     function handleSelect(item) {
-        let chosen = [...chosenList];
-        let items = [...chooseList];
-        let index = items.findIndex(obj => obj.id === item.id);
-        //arr.findIndex(obj => obj.email === email);
-        items.splice(index, 1);
-        setChooseList(items);
-        chosen.push(item);
-        setChosen(chosen);
-        setChanged(true);
+        if(isMultiple) {
+            let chosen = [...chosenList];
+            let items = [...chooseList];
+            let index = items.findIndex(obj => obj.id === item.id);
+            //arr.findIndex(obj => obj.email === email);
+            items.splice(index, 1);
+            setChooseList(items);
+            chosen.push(item);
+            setChosen(chosen);
+            setChanged(true);
+        } else {
+            setChosenSingle(item.name);
+            setShowSelect(false);
+        }
     }
 
     function handleRemoveSelected(item) {
@@ -46,19 +51,31 @@ export const ReactionSelectInput = ({ placeholder, label, chosenList, chooseList
         setChanged(true);
     }
 
+    function handlePress() {
+        if(!isMultiple) {
+            setShowSelect(!showSelect)
+        }
+    }
+
 
     return (
-        <View style={styles.container}>
+        <Pressable onPress={() => handlePress()} style={styles.container}>
             {label && <Text style={styles.label}>{label.toUpperCase()} {changed && <Text style={styles.changedAlert}>changed</Text>}</Text>}
-            <View style={!changed ? styles.input : styles.inputChanged}>
-                {chosenList && chosenList.length === 0 && <Text>{placeholder ? placeholder : 'Choose Item...'}</Text>}
-                {chosenList && chosenList.length > 0 && <ScrollView style={styles.chosenContainer} horizontal>{chosenList.map((item) => <View key={item.id} style={styles.chosenItem}><Text style={{color: "#ED9146"}}>{item.name}</Text><Pressable onPress={() => handleRemoveSelected(item)}><IonIcons name='close' size={15} style={{color: '#A3A4A8'}}></IonIcons></Pressable></View>)}</ScrollView>}
-                {!chosenList &&  <Text>Add List to Props</Text>}
-                <Pressable onPress={() => setShowSelect(!showSelect)}><IonIcons name='caret-down' size={17} style={{color: '#A3A4A8'}}></IonIcons></Pressable>
-            </View>
-            {showSelect && chooseList && chooseList.length > 0 && <ScrollView style={styles.chooseContainer}>{chooseList.map((item) => <Pressable onPress={() => handleSelect(item)}>{({ pressed }) => (<Text key={item.id} style={pressed ? styles.chooseItemPressed : styles.chooseItem}>{item.name}</Text>)}</Pressable>)}</ScrollView>}
+            {isMultiple && <View style={!changed ? styles.input : styles.inputChanged}>
+                {chosenList && chosenList.length === 0 && <Text style={styles.text}>{placeholder ? placeholder : 'Choose Item...'}</Text>}
+                {chosenList && chosenList.length > 0 && <ScrollView style={styles.chosenContainer} horizontal>{chosenList.map((item) => <View key={item.id} style={styles.chosenItem}><Text style={{ color: "#ED9146" }}>{item.name}</Text><Pressable onPress={() => handleRemoveSelected(item)}><IonIcons name='close' size={15} style={{ color: '#A3A4A8' }}></IonIcons></Pressable></View>)}</ScrollView>}
+                {!chosenList && <Text style={styles.text}>Add List to Props</Text>}
+                <Pressable onPress={() => setShowSelect(!showSelect)}><IonIcons name='caret-down' size={17} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
+            </View>}
+            {!isMultiple && <View style={!changed ? styles.input : styles.inputChanged}>
+                {chosenSingle === '' && <Text style={styles.text}>{placeholder ? placeholder : 'Choose Item...'}</Text>}
+                {!chosenSingle && <Text style={styles.text}>Add chosenSingle to Props</Text>}
+                {chosenSingle != '' && <Text style={styles.text}>{chosenSingle}</Text>}
+                <Pressable onPress={() => setShowSelect(!showSelect)}><IonIcons name='caret-down' size={17} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
+            </View>}
+            {showSelect && chooseList && chooseList.length > 0 && <ScrollView style={styles.chooseContainer}>{chooseList.map((item) => <Pressable key={item.id} onPress={() => handleSelect(item)}>{({ pressed }) => (<Text key={item.id} style={pressed ? styles.chooseItemPressed : styles.chooseItem}>{item.name}</Text>)}</Pressable>)}</ScrollView>}
             {showSelect && chooseList && chooseList.length === 0 && <ScrollView style={styles.chooseContainer}><Text>No more to choose from</Text></ScrollView>}
-        </View>
+        </Pressable>
     );
 
 };
@@ -68,6 +85,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         paddingBottom: 5,
+        
     },
     input: {
         height: 40,
@@ -79,6 +97,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        paddingRight: 10,
     },
     inputChanged: {
         // height: 40,
@@ -95,6 +114,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        paddingRight: 10,
     },
     label: {
         paddingLeft: 10,
@@ -102,6 +122,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 10,
         color: '#738C91',
+        fontFamily: 'Gill Sans',
     },
     changedAlert: {
         color: '#F4E3C2',
@@ -127,10 +148,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#F4E3C2",
         marginEnd: 3,
         padding: 3,
-        display:'flex',
+        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        alignItems: 'center'
+        alignItems: 'center',
+        fontSize: 18,
     },
     chooseItemPressed: {
         borderWidth: 1,
@@ -139,17 +161,23 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: "#E9E9E9",
         marginEnd: 3,
-        padding: 5,
+        padding: 3,
+        fontFamily: 'Gill Sans',
+        color: '#616565',
+        fontSize: 18,
         // color: "#ED9146"
     },
     chooseItem: {
-        // borderWidth: 1,
+        borderWidth: 1,
         // backgroundColor: '#ED9146',
-        // borderColor: '#ED9146',
+        borderColor: 'white',
         borderRadius: 5,
         marginEnd: 3,
-        padding: 5,
+        padding: 3,
         paddingLeft: 10,
+        fontFamily: 'Gill Sans',
+        color: '#616565',
+        fontSize: 18,
         // color: "#ED9146"
     },
     dropdown: {
@@ -160,5 +188,11 @@ const styles = StyleSheet.create({
         borderColor: "#E9E9E9",
         // top: 50,
         // zIndex: 11,
-    }
+    },
+    text: {
+        fontSize: 17,
+        fontFamily: 'Gill Sans',
+        color: '#616565',
+        fontSize: 18,
+    },
 });

@@ -25,10 +25,10 @@ export const ScaleQuestion = ({active, scaleQuestion}) => {
     return (
         <View style={{paddingTop: 5, display: 'flex',flexDirection: 'row', justifyContent: 'center',}}>
            {active && <View style={styles.container}>
-            {range.map((value, index) => (<Pressable onPress={() => handleChange(value)} style={selected === value ? styles.textContainerSelected : styles.textContainer}><Text key={index} style={selected === value ? styles.textStyleSelected : styles.textStyle}>{value}</Text></Pressable>))}
+            {range.map((value, index) => (<Pressable key={index} onPress={() => handleChange(value)} style={selected === value ? styles.textContainerSelected : styles.textContainer}><Text key={index} style={selected === value ? styles.textStyleSelected : styles.textStyle}>{value}</Text></Pressable>))}
            </View> }
            {!active && <View style={styles.container}>
-            {range.map((value, index) => (<View style={styles.textContainer}><Text key={index} style={styles.textStyle}>{value}</Text></View>))}
+            {range.map((value, index) => (<View style={styles.textContainer} key={index}><Text style={styles.textStyle}>{value}</Text></View>))}
            </View> }
         </View>
     );
