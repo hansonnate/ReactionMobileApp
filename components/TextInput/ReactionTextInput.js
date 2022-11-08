@@ -12,29 +12,31 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const ReactionTextInput = ({ placeholder, label, value }) => {
-    const [text, onChangeText] = useState(value);
+export const ReactionTextInput = ({ placeholder, label, value, onChange, index }) => {
+    // const [text, onChangeText] = useState(value);
     const [changed, setChanged] = useState(false);
 
 
     function handleChange(newvalue) {
-        onChangeText(newvalue);
-        if (newvalue === value) {
-            setChanged(false);
-        } else if (!changed) {
-            setChanged(true);
-        }
-        
+        onChange(newvalue, index);
     }
+
+
+    // function onBlur(newvalue) {
+    //     if (onChange) {
+    //         onChange(newvalue, index);
+    //     }
+    // }
     return (
         <View style={styles.container}>
             {label && <Text style={styles.label}>{label.toUpperCase()} {changed && <Text style={styles.changedAlert}>changed</Text>}</Text>}
             <TextInput
                 style={!changed ? styles.input : styles.inputChanged}
                 onChangeText={handleChange}
-                value={text}
+                value={value}
                 placeholder={placeholder ? placeholder : "Enter..."}
                 keyboardType="number-pad"
+                // onBlur={() => onBlur}
             />
         </View>
     );

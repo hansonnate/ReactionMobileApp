@@ -17,8 +17,19 @@ import { TextQuestion } from './Types/TextQuestion';
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const Question = ({question, active, setActive}) => {
+export const Question = ({question, questionIndex, active, setActive, onUpdateQuestion}) => {
 
+    function handleUpdateQuestion(subQuestion) {
+        let temp = {...question};
+        if(temp.type === "MultipleChoice") {
+            temp.choiceQuestion = subQuestion;
+        } else if (temp.type === "NumberScale") {
+            temp.scaleQuestion = subQuestion;
+        } else if (temp.type === "Text") {
+            temp.textQuestion = subQuestion;
+        }
+        onUpdateQuestion(temp, questionIndex);
+    }
 
     return (
         <Pressable onPress={() => setActive(question.id)}>
@@ -27,7 +38,7 @@ export const Question = ({question, active, setActive}) => {
             <ReactionActiveTextInput italics value={question.description} active={active} label={'Instructions'}>{question.name}</ReactionActiveTextInput>
             {question.type == "Text" && <TextQuestion active={active} textQuestion={question.textQuestion}></TextQuestion>}
             {question.type == "NumberScale" && <ScaleQuestion active={active} scaleQuestion={question.scaleQuestion}></ScaleQuestion>}
-            {question.type == "MultipleChoice" && <MultipleChoiceQuestion active={active} choiceQuestion={question.choiceQuestion}></MultipleChoiceQuestion>}
+            {question.type == "MultipleChoice" && <MultipleChoiceQuestion active={active} updateQuestion={handleUpdateQuestion} choiceQuestion={question.choiceQuestion}></MultipleChoiceQuestion>}
         </View>
         </Pressable>
     );

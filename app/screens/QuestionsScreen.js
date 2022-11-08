@@ -32,6 +32,12 @@ export const QuestionsScreen = ({initQuestions, setPage}) => {
         setQuestions(array);
     }
 
+    function handleUpdateQuestion(question, index) {
+        let array = [...questions];
+        array[index] = question;
+        setQuestions(array);
+    }
+
 
     return (
         <View style={styles.sectionContainer}>
@@ -40,7 +46,7 @@ export const QuestionsScreen = ({initQuestions, setPage}) => {
                 <ButtonPillBack title={'Design'} right onPress={() => setPage('Design')}></ButtonPillBack>
             </View>
             <ScrollView>
-                {questions.map((question) => <Question key={question.id} question={question} active={question.id === activeQuestionId} setActive={setActiveQuestionId}></Question>)}    
+                {questions.map((question, index) => <Question key={index} onUpdateQuestion={handleUpdateQuestion} question={question} questionIndex={index} active={question.id === activeQuestionId} setActive={setActiveQuestionId}></Question>)}    
             </ScrollView> 
             <View style={styles.bottomButtons}>
                 <ButtonAddMinus title={'question'} plus onPress={() => setShowNewQuestion(true)}></ButtonAddMinus>

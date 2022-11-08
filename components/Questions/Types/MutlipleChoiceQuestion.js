@@ -5,7 +5,7 @@
  */
 
 //External imports
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { ButtonAddMinus } from '../../Buttons/ButtonAddMinus';
 import { ReactionTextInput } from '../../TextInput/ReactionTextInput';
@@ -15,20 +15,41 @@ import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const MultipleChoiceQuestion = ({ active, choiceQuestion }) => {
+export const MultipleChoiceQuestion = ({ active, choiceQuestion, updateQuestion }) => {
 
+    const [choice, setChoice] = useState(choiceQuestion);
+
+    function addChoice() {
+        let temp = choiceQuestion;
+        temp.choices.push("");
+        updateQuestion(temp);
+    }
+
+    function deleteChoice(index) {
+        let temp = {...choice};
+        temp.choices.splice(index, 1);
+        setChoice(temp);
+        updateQuestion(temp);
+    }
+
+    function changeChoice(newvalue, index) {
+        let temp = {...choice};
+        temp.choices[index] = newvalue;
+        setChoice(temp);
+        updateQuestion(temp);
+    }
 
     return (
         <View style={{ paddingTop: 5 }}>
             {active && <Text style={styles.label}>CHOICES</Text>}
-            {active && choiceQuestion.choices.map((value, index) => <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                <View style={{width: '94%'}}><ReactionTextInput key={index} value={value}></ReactionTextInput></View>
-                <Pressable onPress={() => alert("Delete Choice")} style={styles.closeIcon}>
+            {active && choice.choices.map((value, index) => <View key={index} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{width: '94%'}}><ReactionTextInput key={index} value={value} onChange={changeChoice} index={index}></ReactionTextInput></View>
+                <Pressable onPress={() => deleteChoice(index, value)} style={styles.closeIcon}>
                     <IonIcons name='close' size={20} style={{ color: '#A3A4A8' }}></IonIcons>
                 </Pressable>
             </View>)}
-            {!active && choiceQuestion.choices.map((value, index) => <Text key={index} style={styles.textNotActive}>{value}</Text>)}
-            {active && <View style={{ display: 'flex', flexDirection: 'row', paddingTop: 5 }}><ButtonAddMinus title={'add choice'} plus onPress={() => alert("Add Choice")}></ButtonAddMinus></View>}
+            {!active && choice.choices.map((value, index) => <Text key={index} style={styles.textNotActive}>{value}</Text>)}
+            {active && <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', paddingTop: 5 }}><ButtonAddMinus title={'add choice'} plus onPress={() => addChoice()}></ButtonAddMinus></View>}
         </View>
     );
 

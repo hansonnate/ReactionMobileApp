@@ -28,11 +28,12 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
     ]
 
     const [chosenType, setChosenType] = useState('Number Scale');
+    const [noName, setNoName] = useState(false);
     const [question, setQuestion] = useState({
         id: shortId,
         projectId: 0,
-        name: "yeet",
-        description: 'skirt',
+        name: "",
+        description: '',
         type: "NumberScale",
         choiceQuestion: {
             isMultiSelect: false,
@@ -55,8 +56,13 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
     });
 
     function handleCreateQuestion() {
+        
+        if (question.name === '') {
+            setNoName(true);
+            return;
+        }
         setShow(false);
-        let newQuestion = {...question}
+        let newQuestion = { ...question }
         if (chosenType === "Number Scale") {
             newQuestion.choiceQuestion = null;
             newQuestion.textQuestion = null;
@@ -73,6 +79,54 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
             newQuestion.type = "Text";
             createQuestion(newQuestion);
         }
+        //reset question
+        setQuestion({
+            id: shortId,
+            projectId: 0,
+            name: "",
+            description: '',
+            type: "NumberScale",
+            choiceQuestion: {
+                isMultiSelect: false,
+                isRandomized: false,
+                hasOtherOption: false,
+                otherOptionLabel: "Other",
+                choices: [""],
+            },
+            textQuestion: {
+                placeholder: "",
+                maxLength: 500,
+            },
+            scaleQuestion: {
+                min: 0,
+                minDescription: "",
+                max: 5,
+                maxDescription: "",
+                step: 1,
+            },
+        });
+    };
+
+    function handleUpdateName(name) {
+        let temp = { ...question };
+        temp.name = name;
+        setQuestion(temp);
+    };
+    function handleUpdateInstructions(instructions) {
+        let temp = { ...question };
+        temp.description = instructions;
+        setQuestion(temp);
+    };
+    function handleUpdateChoices(subQuestion) {
+        let temp = { ...question };
+        if (temp.type === "MultipleChoice") {
+            temp.choiceQuestion = subQuestion;
+        } else if (temp.type === "NumberScale") {
+            temp.scaleQuestion = subQuestion;
+        } else if (temp.type === "Text") {
+            temp.textQuestion = subQuestion;
+        }
+        setQuestion(temp);
     };
 
     return (
@@ -81,13 +135,13 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
                 <View style={styles.sectionContainer}>
                     <Pressable onPress={() => setShow(false)} style={styles.closeIcon}><IonIcons name='close' size={20} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
                     <Text style={styles.heading}>Create New Question</Text>
-                    <View style={{paddingBottom: 10}}>
+                    <View style={{ paddingBottom: 10 }}>
                         <ReactionSelectInput chooseList={questionTypes} chosenSingle={chosenType} setChosenSingle={setChosenType} label='Choose Question Type'></ReactionSelectInput>
-                        <ReactionActiveTextInput value={question.name} active={true} label={'Question Name'}>{question.name}</ReactionActiveTextInput>
-                        <ReactionActiveTextInput italics value={question.description} active={true} label={'Instructions'}>{question.name}</ReactionActiveTextInput>
+                        <ReactionActiveTextInput value={question.name} active={true} label={'Question Name'} error={noName} errorMessage='Type Question Name' onChange={handleUpdateName}>{question.name}</ReactionActiveTextInput>
+                        <ReactionActiveTextInput italics value={question.description} active={true} label={'Instructions'} onChange={handleUpdateInstructions}>{question.name}</ReactionActiveTextInput>
                         {chosenType == "Text" && <TextQuestion active={true} textQuestion={question.textQuestion}></TextQuestion>}
                         {chosenType == "Number Scale" && <ScaleQuestion active={true} scaleQuestion={question.scaleQuestion}></ScaleQuestion>}
-                        {chosenType == "Multiple Choice" && <MultipleChoiceQuestion active={true} choiceQuestion={question.choiceQuestion}></MultipleChoiceQuestion>}
+                        {chosenType == "Multiple Choice" && <MultipleChoiceQuestion active={true} choiceQuestion={question.choiceQuestion} updateQuestion={handleUpdateChoices}></MultipleChoiceQuestion>}
                     </View>
                     <ButtonGeneric title={'Create Question'} onPress={() => handleCreateQuestion()}></ButtonGeneric>
                 </View>
@@ -99,8 +153,8 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
 
 const styles = StyleSheet.create({
     absoluteContainer: {
-        position: 'absolute', 
-        bottom: 50, 
+        position: 'absolute',
+        bottom: 50,
         width: '100%',
         // backgroundColor: 'black',
     },
