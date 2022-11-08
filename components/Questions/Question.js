@@ -30,9 +30,12 @@ export const Question = ({question, questionIndex, active, setActive, onUpdateQu
         }
         onUpdateQuestion(temp, questionIndex);
     }
+    function handleSetActive() {
+        setActive(question.id);
+    }
 
     return (
-        <Pressable onPress={() => setActive(question.id)}>
+        <Pressable onPress={() => handleSetActive()}>
         <View style={active ? styles.sectionContainerActive : styles.sectionContainer}>
             <ReactionActiveTextInput value={question.name} active={active} label={'Question'}>{question.name}</ReactionActiveTextInput>
             <ReactionActiveTextInput italics value={question.description} active={active} label={'Instructions'}>{question.name}</ReactionActiveTextInput>

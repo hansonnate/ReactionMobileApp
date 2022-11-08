@@ -14,6 +14,7 @@ import { ButtonPillBack } from '../../components/Buttons/ButtonPillBack';
 import { Question } from '../../components/Questions/Question';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import { AddQuestionModal } from '../../components/Questions/AddQuestionModal';
+import { QuestionOptionsModal } from '../../components/Questions/QuestionOptionsModal';
 // import { Text } from 'react-native';
 
 //Internal imports
@@ -23,8 +24,10 @@ export const QuestionsScreen = ({initQuestions, setPage}) => {
     
 
     const [activeQuestionId, setActiveQuestionId] = useState();
+    // const [activeQuestion, setActiveQuestion] = useState(initQuestions[0]);
     const [questions , setQuestions] = useState(initQuestions);
     const [showNewQuestion, setShowNewQuestion] = useState(false);
+    const [showOptions, setShowOptions] = useState(false);
 
     function handleNewQuestion(question) {
         let array = [...questions];
@@ -36,6 +39,10 @@ export const QuestionsScreen = ({initQuestions, setPage}) => {
         let array = [...questions];
         array[index] = question;
         setQuestions(array);
+    }
+
+    function activeQuestion() {
+        return questions.find((q) => q.id === activeQuestionId); 
     }
 
 
@@ -50,7 +57,7 @@ export const QuestionsScreen = ({initQuestions, setPage}) => {
             </ScrollView> 
             <View style={styles.bottomButtons}>
                 <ButtonAddMinus title={'question'} plus onPress={() => setShowNewQuestion(true)}></ButtonAddMinus>
-                <Pressable style={styles.actionButton}><View style={styles.bottomButtons}><Text style={styles.text}>Edit</Text><IonIcons name='chevron-down' size={20} style={{ color: '#A3A4A8' }}></IonIcons></View></Pressable>
+                <Pressable style={styles.actionButton} onPress={() => setShowOptions(true)}><View style={styles.bottomButtons}><Text style={styles.text}>options</Text><IonIcons name='chevron-down' size={20} style={{ color: '#A3A4A8' }}></IonIcons></View></Pressable>
             </View>
             <View style={styles.bottomButtons}>
                 {/* <ButtonAddMinus title={'question'} plus onPress={() => alert('Added Question')}></ButtonAddMinus> */}
@@ -61,6 +68,7 @@ export const QuestionsScreen = ({initQuestions, setPage}) => {
                 <Pressable style={styles.buttonStyle}><IonIcons name='chevron-forward' size={20} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
             </View>
            <AddQuestionModal show={showNewQuestion} setShow={setShowNewQuestion} createQuestion={handleNewQuestion}></AddQuestionModal>
+           {activeQuestionId && <QuestionOptionsModal show={showOptions} setShow={setShowOptions} currQuestion={activeQuestion()}></QuestionOptionsModal> }
         </View>
     );
 
@@ -111,7 +119,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderColor: '#E9E9E9',
         backgroundColor: 'white',
-        width: 80,
+        width: 105,
     },
     text: {
         fontSize: 16,
