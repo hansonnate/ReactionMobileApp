@@ -30,7 +30,7 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
     const [chosenType, setChosenType] = useState('Number Scale');
     const [noName, setNoName] = useState(false);
     const [question, setQuestion] = useState({
-        id: shortId,
+        id: shortId(),
         projectId: 0,
         name: "",
         description: '',
@@ -81,7 +81,7 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
         }
         //reset question
         setQuestion({
-            id: shortId,
+            id: shortId(),
             projectId: 0,
             name: "",
             description: '',

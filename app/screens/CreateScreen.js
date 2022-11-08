@@ -464,15 +464,12 @@ export const CreateScreen = ({ navigation }) => {
               </View>
             )}
           </Pressable>
-          {/* <AntDesign name='windows'></AntDesign> */}
-          <ButtonGeneric onPress={() => alert('This is the Create Survey Screen.')} title='Create Survey'></ButtonGeneric>
-
         </View>
         <ReactionTable rowClick={handleSurveyClick} headers={headers} items={projects} showSettings={showSettings} setShowSettings={setShowSettings} setActive={setActiveProject} activeItem={activeProject}></ReactionTable>
+        <View style={styles.createButton}><ButtonGeneric onPress={() => alert('This is the Create Survey Screen.')} title='Create Survey'></ButtonGeneric></View>
         {showSettings && <ProjectSettings setShowSettings={setShowSettings} project={activeProject}></ProjectSettings>}
       </>}
       {page === 'Questions' && <QuestionsScreen initQuestions={activeProject.Question} setPage={setPage}></QuestionsScreen>}
-
     </View>
   );
 
@@ -562,5 +559,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     // borderColor: 'blue',
+  },
+  createButton: {
+    paddingTop: 10
   },
 });

@@ -19,7 +19,7 @@ import { TextOptions } from './TypeOptions/TextOptions';
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const QuestionOptionsModal = ({ show, setShow, currQuestion, saveQuestion, changeType }) => {
+export const QuestionOptionsModal = ({ show, setShow, currQuestion, saveQuestion, changeType, deleteQuestion }) => {
 
     // const [question, setQuestion] = useState(currQuestion);
     const questionTypes = [
@@ -43,7 +43,7 @@ export const QuestionOptionsModal = ({ show, setShow, currQuestion, saveQuestion
                     {currQuestion.type === 'Text' && <TextOptions question={currQuestion} setQuestion={saveQuestion}></TextOptions>}
                     <ReactionSelectInput chooseList={questionTypes} chosenSingle={currQuestion.type === 'MultipleChoice' ? "Multiple Choice" : currQuestion.type === 'NumberScale' ? "Number Scale" : currQuestion.type === 'Text' ? "Text" : 'No Type'} setChosenSingle={changeType} label='Change Question Type'></ReactionSelectInput>
                     <View style={{paddingTop: 10}}><ButtonGeneric title={'Save Changes'} onPress={() => handleCreateQuestion()}></ButtonGeneric></View>
-                    <View style={styles.bottomButtons}><ButtonPill title={'Copy Question'}></ButtonPill><ButtonPill title={'Delete Question'}></ButtonPill></View>
+                    <View style={styles.bottomButtons}><ButtonPill title={'Copy Question'}></ButtonPill><ButtonPill title={'Delete Question'} onPress={deleteQuestion}></ButtonPill></View>
                 </View>
             </View>}
         </>

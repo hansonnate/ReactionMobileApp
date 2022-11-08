@@ -6,7 +6,7 @@
 
 //External imports
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Alert } from 'react-native';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import { ButtonAddMinus } from '../../components/Buttons/ButtonAddMinus';
 // import { ButtonPill } from '../../components/Buttons/ButtonPill';
@@ -101,6 +101,29 @@ export const QuestionsScreen = ({ initQuestions, setPage }) => {
         );
     }
 
+    function handleDeleteQuestion() {
+        setShowOptions(false);
+        console.log('Yup');
+        let array = [...questions];
+        let index = questions.findIndex((q) => q.id === activeQuestionId);
+        array.splice(index, 1);
+        setQuestions(array);
+    }
+
+    function deleteQuestionAlert() {
+        Alert.alert(
+            "Delete Chosen Question?",
+            "(non-recoverable)",
+            [
+                {
+                    text: "Cancel",
+                    // onPress: () => ,
+                    style: "cancel"
+                },
+                { text: "Yes", onPress: () => handleDeleteQuestion() }
+            ]
+        );
+    }
 
     return (
         <View style={styles.sectionContainer}>
@@ -109,23 +132,23 @@ export const QuestionsScreen = ({ initQuestions, setPage }) => {
                 <ButtonPillBack title={'Design'} right onPress={() => setPage('Design')}></ButtonPillBack>
             </View>
             {!showOptions && <ScrollView>
-                 {questions.map((question, index) => <Question key={index} onUpdateQuestion={handleUpdateQuestion} question={question} questionIndex={index} active={question.id === activeQuestionId} setActive={setActiveQuestionId}></Question>)}
-            </ScrollView> }
+                {questions.map((question, index) => <Question key={index} onUpdateQuestion={handleUpdateQuestion} question={question} questionIndex={index} active={question.id === activeQuestionId} setActive={setActiveQuestionId}></Question>)}
+            </ScrollView>}
             {showOptions && <View style={styles.optionsActive}><ScrollView >{displayActiveQuestion()}</ScrollView></View>}
             {!showOptions && <><View style={styles.bottomButtons}>
                 <ButtonAddMinus title={'question'} plus onPress={() => setShowNewQuestion(true)}></ButtonAddMinus>
                 <Pressable style={styles.actionButton} onPress={() => setShowOptions(true)}><View style={styles.bottomButtons}><Text style={styles.text}>options</Text><IonIcons name='chevron-down' size={20} style={{ color: '#A3A4A8' }}></IonIcons></View></Pressable>
             </View>
-             <View style={styles.bottomButtons}>
-                {/* <ButtonAddMinus title={'question'} plus onPress={() => alert('Added Question')}></ButtonAddMinus> */}
-                <ButtonAddMinus title={'page'} minus onPress={() => alert('Added Page')}></ButtonAddMinus>
-                <ButtonAddMinus title={'page'} plus onPress={() => alert('Added page')}></ButtonAddMinus>
-                <Pressable style={styles.buttonStyle}><IonIcons name='chevron-back' size={20} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
-                <Pressable style={styles.buttonStyle}><Text style={{ color: '#A3A4A8', fontWeight: 'bold' }}>1</Text></Pressable>
-                <Pressable style={styles.buttonStyle}><IonIcons name='chevron-forward' size={20} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
-            </View></>}
+                <View style={styles.bottomButtons}>
+                    {/* <ButtonAddMinus title={'question'} plus onPress={() => alert('Added Question')}></ButtonAddMinus> */}
+                    <ButtonAddMinus title={'page'} minus onPress={() => alert('Removed Page')}></ButtonAddMinus>
+                    <ButtonAddMinus title={'page'} plus onPress={() => alert('Added page')}></ButtonAddMinus>
+                    <Pressable style={styles.buttonStyle}><IonIcons name='chevron-back' size={20} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
+                    <Pressable style={styles.buttonStyle}><Text style={{ color: '#A3A4A8', fontWeight: 'bold' }}>1</Text></Pressable>
+                    <Pressable style={styles.buttonStyle}><IonIcons name='chevron-forward' size={20} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
+                </View></>}
             <AddQuestionModal show={showNewQuestion} setShow={setShowNewQuestion} createQuestion={handleNewQuestion}></AddQuestionModal>
-            {activeQuestionId && <QuestionOptionsModal show={showOptions} setShow={setShowOptions} currQuestion={activeQuestion()} saveQuestion={handleSaveQuestion} changeType={handleChangeType}></QuestionOptionsModal>}
+            {activeQuestionId && <QuestionOptionsModal show={showOptions} setShow={setShowOptions} currQuestion={activeQuestion()} saveQuestion={handleSaveQuestion} changeType={handleChangeType} deleteQuestion={deleteQuestionAlert}></QuestionOptionsModal>}
         </View>
     );
 
