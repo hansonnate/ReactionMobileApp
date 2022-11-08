@@ -37,7 +37,10 @@ export const ScaleQuestion = ({active, scaleQuestion}) => {
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
-        flexDirection: 'row', 
+        flexDirection: 'row',
+        justifyContent: 'center',
+        width: "100%",
+        flexWrap: 'wrap', 
     },
     textStyle: {
         fontFamily: 'Gill Sans',
@@ -57,9 +60,10 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: "#E9E9E9",
         borderRadius: 22,
-        width: 44,
-        height: 44,
+        width: 42,
+        height: 42,
         marginHorizontal: 3,
+        marginBottom: 5,
     },
     textContainerSelected: {
         display: 'flex',
@@ -70,8 +74,9 @@ const styles = StyleSheet.create({
         borderColor: "#738C91",
         backgroundColor: "#738C91", 
         borderRadius: 22,
-        width: 44,
-        height: 44,
+        width: 42,
+        height: 42,
         marginHorizontal: 3,
+        marginBottom: 5,
     }
 });

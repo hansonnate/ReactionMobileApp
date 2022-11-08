@@ -12,7 +12,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const ReactionTextInput = ({ placeholder, label, value, onChange, index }) => {
+export const ReactionTextInput = ({ placeholder, label, value, onChange, index, textContentType, error, errorMessage }) => {
     // const [text, onChangeText] = useState(value);
     const [changed, setChanged] = useState(false);
 
@@ -29,14 +29,18 @@ export const ReactionTextInput = ({ placeholder, label, value, onChange, index }
     // }
     return (
         <View style={styles.container}>
-            {label && <Text style={styles.label}>{label.toUpperCase()} {changed && <Text style={styles.changedAlert}>changed</Text>}</Text>}
+            {label && <View style={{ display: 'flex', flexDirection: 'row' }}>
+                <Text style={styles.label}>{label.toUpperCase()}</Text>
+                {error && <Text style={styles.errorMessage}>{errorMessage ? errorMessage : "Error..."}</Text>}
+            </View>}
             <TextInput
                 style={!changed ? styles.input : styles.inputChanged}
                 onChangeText={handleChange}
                 value={value}
                 placeholder={placeholder ? placeholder : "Enter..."}
-                keyboardType="number-pad"
-                // onBlur={() => onBlur}
+                textContentType={textContentType ? textContentType : 'none'}
+
+            // onBlur={() => onBlur}
             />
         </View>
     );
@@ -75,10 +79,19 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingBottom: 4,
         fontWeight: 'bold',
+        fontFamily: 'Gill Sans',
         fontSize: 10,
         color: '#738C91',
     },
     changedAlert: {
         color: '#F4E3C2',
+    },
+    errorMessage: {
+        paddingLeft: 10,
+        paddingBottom: 4,
+        fontWeight: 'bold',
+        fontSize: 10,
+        color: 'red',
+        fontFamily: 'Gill Sans',
     },
 });

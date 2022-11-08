@@ -6,7 +6,7 @@
 
 //External imports
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, ScrollView} from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import { ButtonAddMinus } from '../../components/Buttons/ButtonAddMinus';
 // import { ButtonPill } from '../../components/Buttons/ButtonPill';
@@ -20,12 +20,12 @@ import { QuestionOptionsModal } from '../../components/Questions/QuestionOptions
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const QuestionsScreen = ({initQuestions, setPage}) => {
-    
+export const QuestionsScreen = ({ initQuestions, setPage }) => {
+
 
     const [activeQuestionId, setActiveQuestionId] = useState();
     // const [activeQuestion, setActiveQuestion] = useState(initQuestions[0]);
-    const [questions , setQuestions] = useState(initQuestions);
+    const [questions, setQuestions] = useState(initQuestions);
     const [showNewQuestion, setShowNewQuestion] = useState(false);
     const [showOptions, setShowOptions] = useState(false);
 
@@ -42,7 +42,63 @@ export const QuestionsScreen = ({initQuestions, setPage}) => {
     }
 
     function activeQuestion() {
-        return questions.find((q) => q.id === activeQuestionId); 
+        return questions.find((q) => q.id === activeQuestionId);
+    }
+
+    function handleSaveQuestion(updatedQuestion) {
+        console.log(updatedQuestion);
+        let array = [...questions];
+        let index = questions.findIndex((q) => q.id === activeQuestionId);
+        array[index] = updatedQuestion;
+        setQuestions(array);
+    }
+
+    function handleChangeType(type) {
+        let array = [...questions];
+        let index = questions.findIndex(q => q.id === activeQuestionId);
+        if (type === "Number Scale") {
+            array[index].type = "NumberScale";
+            array[index].choiceQuestion = null;
+            array[index].textQuestion = null;
+            array[index].scaleQuestion = {
+                min: 0,
+                minDescription: "",
+                max: 5,
+                maxDescription: "",
+                step: 1,
+            };
+            setQuestions(array);
+        } else if (type === "Multiple Choice") {
+            array[index].type = "MultipleChoice";
+            array[index].choiceQuestion = {
+                isMultiSelect: false,
+                isRandomized: false,
+                hasOtherOption: false,
+                otherOptionLabel: "Other",
+                choices: [""],
+            };
+            array[index].textQuestion = null;
+            array[index].scaleQuestion = null;
+            setQuestions(array);
+        } else if (type === "Text") {
+            array[index].type = "Text";
+            array[index].choiceQuestion = null;
+            array[index].textQuestion = {
+                placeholder: "Answer this...",
+                maxLength: 500,
+            };
+            array[index].scaleQuestion = null
+            setQuestions(array);
+        }
+    }
+
+    function displayActiveQuestion() {
+        let index = questions.findIndex((q) => q.id === activeQuestionId);
+        let question = questions[index];
+
+        return (
+            <Question onUpdateQuestion={handleUpdateQuestion} question={question} questionIndex={index} active={question.id === activeQuestionId} setActive={setActiveQuestionId}></Question>
+        );
     }
 
 
@@ -52,23 +108,24 @@ export const QuestionsScreen = ({initQuestions, setPage}) => {
                 <ButtonPillBack title={'Surveys'} left onPress={() => setPage('Surveys')}></ButtonPillBack>
                 <ButtonPillBack title={'Design'} right onPress={() => setPage('Design')}></ButtonPillBack>
             </View>
-            <ScrollView>
-                {questions.map((question, index) => <Question key={index} onUpdateQuestion={handleUpdateQuestion} question={question} questionIndex={index} active={question.id === activeQuestionId} setActive={setActiveQuestionId}></Question>)}    
-            </ScrollView> 
-            <View style={styles.bottomButtons}>
+            {!showOptions && <ScrollView>
+                 {questions.map((question, index) => <Question key={index} onUpdateQuestion={handleUpdateQuestion} question={question} questionIndex={index} active={question.id === activeQuestionId} setActive={setActiveQuestionId}></Question>)}
+            </ScrollView> }
+            {showOptions && <View style={styles.optionsActive}><ScrollView >{displayActiveQuestion()}</ScrollView></View>}
+            {!showOptions && <><View style={styles.bottomButtons}>
                 <ButtonAddMinus title={'question'} plus onPress={() => setShowNewQuestion(true)}></ButtonAddMinus>
                 <Pressable style={styles.actionButton} onPress={() => setShowOptions(true)}><View style={styles.bottomButtons}><Text style={styles.text}>options</Text><IonIcons name='chevron-down' size={20} style={{ color: '#A3A4A8' }}></IonIcons></View></Pressable>
             </View>
-            <View style={styles.bottomButtons}>
+             <View style={styles.bottomButtons}>
                 {/* <ButtonAddMinus title={'question'} plus onPress={() => alert('Added Question')}></ButtonAddMinus> */}
                 <ButtonAddMinus title={'page'} minus onPress={() => alert('Added Page')}></ButtonAddMinus>
                 <ButtonAddMinus title={'page'} plus onPress={() => alert('Added page')}></ButtonAddMinus>
                 <Pressable style={styles.buttonStyle}><IonIcons name='chevron-back' size={20} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
-                <Pressable style={styles.buttonStyle}><Text style={{color: '#A3A4A8', fontWeight: 'bold'}}>1</Text></Pressable>
+                <Pressable style={styles.buttonStyle}><Text style={{ color: '#A3A4A8', fontWeight: 'bold' }}>1</Text></Pressable>
                 <Pressable style={styles.buttonStyle}><IonIcons name='chevron-forward' size={20} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
-            </View>
-           <AddQuestionModal show={showNewQuestion} setShow={setShowNewQuestion} createQuestion={handleNewQuestion}></AddQuestionModal>
-           {activeQuestionId && <QuestionOptionsModal show={showOptions} setShow={setShowOptions} currQuestion={activeQuestion()}></QuestionOptionsModal> }
+            </View></>}
+            <AddQuestionModal show={showNewQuestion} setShow={setShowNewQuestion} createQuestion={handleNewQuestion}></AddQuestionModal>
+            {activeQuestionId && <QuestionOptionsModal show={showOptions} setShow={setShowOptions} currQuestion={activeQuestion()} saveQuestion={handleSaveQuestion} changeType={handleChangeType}></QuestionOptionsModal>}
         </View>
     );
 
@@ -126,5 +183,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#A3A4A8',
         marginRight: 5,
+    },
+    optionsActive: {
+        // borderWidth: 2,
+        height: 300,
     },
 });

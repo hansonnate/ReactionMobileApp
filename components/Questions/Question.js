@@ -33,12 +33,24 @@ export const Question = ({question, questionIndex, active, setActive, onUpdateQu
     function handleSetActive() {
         setActive(question.id);
     }
+    function handleUpdateName(value) {
+        let temp = {...question};
+        temp.name = value;
+        onUpdateQuestion(temp, questionIndex);
+    }
+    function handleUpdateInstructions(value) {
+        let temp = {...question};
+        temp.description = value;
+        onUpdateQuestion(temp, questionIndex);
+    }
+
+
 
     return (
         <Pressable onPress={() => handleSetActive()}>
         <View style={active ? styles.sectionContainerActive : styles.sectionContainer}>
-            <ReactionActiveTextInput value={question.name} active={active} label={'Question'}>{question.name}</ReactionActiveTextInput>
-            <ReactionActiveTextInput italics value={question.description} active={active} label={'Instructions'}>{question.name}</ReactionActiveTextInput>
+            <ReactionActiveTextInput value={question.name} onChange={handleUpdateName} active={active} label={'Question'}>{question.name}</ReactionActiveTextInput>
+            <ReactionActiveTextInput italics value={question.description} onChange={handleUpdateInstructions} active={active} label={'Instructions'}>{question.name}</ReactionActiveTextInput>
             {question.type == "Text" && <TextQuestion active={active} textQuestion={question.textQuestion}></TextQuestion>}
             {question.type == "NumberScale" && <ScaleQuestion active={active} scaleQuestion={question.scaleQuestion}></ScaleQuestion>}
             {question.type == "MultipleChoice" && <MultipleChoiceQuestion active={active} updateQuestion={handleUpdateQuestion} choiceQuestion={question.choiceQuestion}></MultipleChoiceQuestion>}

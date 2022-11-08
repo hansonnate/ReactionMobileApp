@@ -330,7 +330,7 @@ export const CreateScreen = ({ navigation }) => {
             description: 'Choose one',
             type: "MultipleChoice",
             choiceQuestion: {
-                isMultiSelect: false,
+                isMultiSelect: true,
                 isRandomized: false,
                 hasOtherOption: false,
                 otherOptionLabel: "Other",
