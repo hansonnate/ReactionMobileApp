@@ -23,7 +23,7 @@ export const ReactionTable = ({noSettings, headers, items, showSettings, setShow
       <ScrollView showsVerticalScrollIndicator={true}>
         <DataTable >
           {items.map((row) =>
-            <DataTable.Row onPress={() => rowClick(row.id)} style={styles.row} key={row.id}>
+            <DataTable.Row onPress={() => rowClick(row.id)} style={styles.row} key={row.id} borderless>
               {headers.map((header, index) =>
                 <DataTable.Cell  style={index == 1 ? styles.statusCell : styles.cell} key={header.id}>
                   {header.name != 'Status' && <Text style={styles.cellText}>{row[header.accessor]}</Text>}
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, borderColor: "#E9E9E9", borderRadius: 5, backgroundColor: '#fff', borderWidth: 3 },
   // scrollView: { flex: 1 },
   head: { fontFamily: 'Arial', backgroundColor: '#F9F9F9', borderRadius: 5, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderBottomWidth: 3, borderColor: "#E9E9E9", paddingLeft: 20, height: 40 },
-  row: { paddingLeft: 20, paddingTop: 5, borderBottomWidth: 3, borderColor: "#E9E9E9"},
+  row: { paddingLeft: 20, paddingTop: 10, borderBottomWidth: 0},
   settingsCell: { flex: .5, display: 'flex', flexDirection: 'column', justifyContent: 'center'},
   cell: { flex: 4, display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'},
   statusCell: { flex: 2, paddingLeft: 5, display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingVertical: 5 },

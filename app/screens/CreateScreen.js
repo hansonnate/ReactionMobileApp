@@ -17,6 +17,7 @@ import { ReactionTable } from '../../components/Table/ReactionTable';
 import { ProjectSettings } from '../../components/ProjectSettings/ProjectSettings';
 import { QuestionsScreen } from './QuestionsScreen';
 import { ReactionSearchInput } from '../../components/TextInput/ReactionSearchInput';
+import { CreateSurveyModal } from '../../components/CreateSurvey/CreateSurveyModal';
 
 export const CreateScreen = ({ navigation }) => {
   //onPress={() => navigation.navigate('Details')}
@@ -440,6 +441,7 @@ export const CreateScreen = ({ navigation }) => {
   ];
 
   const [showSettings, setShowSettings] = useState(false);
+  const [showCreate, setShowCreate] = useState(false);
   const [projects, setProjects] = useState(initProjects);
   const [searchString, setSearchString] = useState('');
   const [activeProject, setActiveProject] = useState();
@@ -466,6 +468,13 @@ export const CreateScreen = ({ navigation }) => {
 
   }
 
+  function handleCreateProject(project) {
+    console.log(project.name);
+    let array = [...projects];
+    array.push(project);
+    setProjects(array);
+  };
+
   return (
     <View style={page === 'Questions' || page === 'Design' ? styles.sectionContainer : styles.sectionContainer2}>
       {page === 'Surveys' && <>
@@ -473,10 +482,11 @@ export const CreateScreen = ({ navigation }) => {
           <ReactionSearchInput placeholder={'Search Surveys'} value={searchString} onChange={searchStringInArray}></ReactionSearchInput>
         </View>
         <ReactionTable rowClick={handleSurveyClick} headers={headers} items={projects} showSettings={showSettings} setShowSettings={setShowSettings} setActive={setActiveProject} activeItem={activeProject}></ReactionTable>
-        <View style={styles.createButton}><ButtonGeneric onPress={() => alert('This is the Create Survey Screen.')} title='Create Survey'></ButtonGeneric></View>
+        <View style={styles.createButton}><ButtonGeneric onPress={() => setShowCreate(true)} title='Create Survey'></ButtonGeneric></View>
         {showSettings && <ProjectSettings setShowSettings={setShowSettings} project={activeProject}></ProjectSettings>}
+        {showCreate && <CreateSurveyModal setShow={setShowCreate} createProject={handleCreateProject}></CreateSurveyModal>}
       </>}
-      {page === 'Questions' && <QuestionsScreen initQuestions={activeProject.Question} setPage={setPage}></QuestionsScreen>}
+      {page === 'Questions' && <QuestionsScreen initQuestions={activeProject.Question} setPage={setPage} projectName={activeProject.name}></QuestionsScreen>}
     </View>
   );
 

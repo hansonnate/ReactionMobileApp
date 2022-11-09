@@ -20,7 +20,7 @@ import { QuestionOptionsModal } from '../../components/Questions/QuestionOptions
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const QuestionsScreen = ({ initQuestions, setPage }) => {
+export const QuestionsScreen = ({ initQuestions, setPage, projectName }) => {
 
 
     const [activeQuestionId, setActiveQuestionId] = useState();
@@ -127,10 +127,12 @@ export const QuestionsScreen = ({ initQuestions, setPage }) => {
 
     return (
         <View style={styles.sectionContainer}>
+                        {/* <View style={{display:'flex', flexDirection:'row', justifyContent:'center', paddingTop : 5}}><Text style={styles.heading}>{projectName}</Text></View> */}
             <View style={styles.topButtons}>
                 <ButtonPillBack title={'Surveys'} left onPress={() => setPage('Surveys')}></ButtonPillBack>
                 <ButtonPillBack title={'Design'} right onPress={() => setPage('Design')}></ButtonPillBack>
             </View>
+
             {!showOptions && <ScrollView>
                 {questions.map((question, index) => <Question key={index} onUpdateQuestion={handleUpdateQuestion} question={question} questionIndex={index} active={question.id === activeQuestionId} setActive={setActiveQuestionId}></Question>)}
             </ScrollView>}
@@ -211,4 +213,10 @@ const styles = StyleSheet.create({
         // borderWidth: 2,
         height: 300,
     },
+    heading: {
+        fontSize: 20,
+        // fontWeight: 'bold',
+        fontFamily: 'Gill Sans',
+        color: '#616565',
+    }
 });
