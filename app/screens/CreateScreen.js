@@ -7,68 +7,69 @@
 //External imports
 import React, { useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+// import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 // import { Text } from 'react-native';
-import IonIcons from 'react-native-vector-icons/Ionicons';
+
 
 //Internal imports
 import { ButtonGeneric } from '../../components/Buttons/ButtonGeneric';
 import { ReactionTable } from '../../components/Table/ReactionTable';
 import { ProjectSettings } from '../../components/ProjectSettings/ProjectSettings';
 import { QuestionsScreen } from './QuestionsScreen';
+import { ReactionSearchInput } from '../../components/TextInput/ReactionSearchInput';
 
 export const CreateScreen = ({ navigation }) => {
   //onPress={() => navigation.navigate('Details')}
   const initQuestions = [
     {
-        id: 0,
-        projectId: 0,
-        name: "How would you rate our service?",
-        description: '1 out of 5',
-        type: "NumberScale", 
-        choiceQuestion: null,
-          textQuestion: null,
-          scaleQuestion: {
-            min: 0,
-            minDescription: "Icky",
-            max: 5,
-            maxDescription: "Great",
-            step: 1,
-          },
+      id: 0,
+      projectId: 0,
+      name: "How would you rate our service?",
+      description: '1 out of 5',
+      type: "NumberScale",
+      choiceQuestion: null,
+      textQuestion: null,
+      scaleQuestion: {
+        min: 0,
+        minDescription: "Icky",
+        max: 5,
+        maxDescription: "Great",
+        step: 1,
+      },
     },
     {
-        id: 1,
-        projectId: 0,
-        name: "Why did you rate us that way?",
-        description: 'Be descriptive',
-        type: "Text",
-        choiceQuestion: null,
-          textQuestion: {
-            placeholder: "Answer this...",
-            maxLength: 500,
-          },
-          scaleQuestion: null
+      id: 1,
+      projectId: 0,
+      name: "Why did you rate us that way?",
+      description: 'Be descriptive',
+      type: "Text",
+      choiceQuestion: null,
+      textQuestion: {
+        placeholder: "Answer this...",
+        maxLength: 500,
+      },
+      scaleQuestion: null
     },
     {
-        id: 2,
-        projectId: 0,
-        name: "Which most accurately describes your emotion?",
-        description: 'Choose one',
-        type: "MultipleChoice",
-        choiceQuestion: {
-            isMultiSelect: false,
-            isRandomized: false,
-            hasOtherOption: false,
-            otherOptionLabel: "Other",
-            choices: ["Angry", "Happy", "Furious", "Excited"],
-          },
-          textQuestion: null,
-          scaleQuestion: null
+      id: 2,
+      projectId: 0,
+      name: "Which most accurately describes your emotion?",
+      description: 'Choose one',
+      type: "MultipleChoice",
+      choiceQuestion: {
+        isMultiSelect: false,
+        isRandomized: false,
+        hasOtherOption: false,
+        otherOptionLabel: "Other",
+        choices: ["Angry", "Happy", "Furious", "Excited"],
+      },
+      textQuestion: null,
+      scaleQuestion: null
     },
-]
+  ]
 
 
-  const projects = [
+  const initProjects = [
     {
       id: "0",
       organizationId: "0684348415",
@@ -91,49 +92,49 @@ export const CreateScreen = ({ navigation }) => {
       numPages: 2,
       Question: [
         {
-            id: '0',
-            projectId: 0,
-            name: "How would you rate our service?",
-            description: '1 out of 5',
-            type: "NumberScale", 
-            choiceQuestion: null,
-              textQuestion: null,
-              scaleQuestion: {
-                min: 0,
-                minDescription: "Icky",
-                max: 5,
-                maxDescription: "Great",
-                step: 1,
-              },
+          id: '0',
+          projectId: 0,
+          name: "How would you rate our service?",
+          description: '1 out of 5',
+          type: "NumberScale",
+          choiceQuestion: null,
+          textQuestion: null,
+          scaleQuestion: {
+            min: 0,
+            minDescription: "Icky",
+            max: 5,
+            maxDescription: "Great",
+            step: 1,
+          },
         },
         {
-            id: '1',
-            projectId: 0,
-            name: "Why did you rate us that way?",
-            description: 'Be descriptive',
-            type: "Text",
-            choiceQuestion: null,
-              textQuestion: {
-                placeholder: "Answer this...",
-                maxLength: 500,
-              },
-              scaleQuestion: null
+          id: '1',
+          projectId: 0,
+          name: "Why did you rate us that way?",
+          description: 'Be descriptive',
+          type: "Text",
+          choiceQuestion: null,
+          textQuestion: {
+            placeholder: "Answer this...",
+            maxLength: 500,
+          },
+          scaleQuestion: null
         },
         {
-            id: '2',
-            projectId: 0,
-            name: "Which most accurately describes your emotion?",
-            description: 'Choose one',
-            type: "MultipleChoice",
-            choiceQuestion: {
-                isMultiSelect: false,
-                isRandomized: false,
-                hasOtherOption: false,
-                otherOptionLabel: "Other",
-                choices: ["Angry", "Happy", "Furious", "Excited"],
-              },
-              textQuestion: null,
-              scaleQuestion: null
+          id: '2',
+          projectId: 0,
+          name: "Which most accurately describes your emotion?",
+          description: 'Choose one',
+          type: "MultipleChoice",
+          choiceQuestion: {
+            isMultiSelect: false,
+            isRandomized: false,
+            hasOtherOption: false,
+            otherOptionLabel: "Other",
+            choices: ["Angry", "Happy", "Furious", "Excited"],
+          },
+          textQuestion: null,
+          scaleQuestion: null
         },
       ],
     },
@@ -159,49 +160,49 @@ export const CreateScreen = ({ navigation }) => {
       numPages: 1,
       Question: [
         {
-            id: '0',
-            projectId: 0,
-            name: "How would you rate our service?",
-            description: '1 out of 5',
-            type: "NumberScale", 
-            choiceQuestion: null,
-              textQuestion: null,
-              scaleQuestion: {
-                min: 0,
-                minDescription: "Icky",
-                max: 5,
-                maxDescription: "Great",
-                step: 1,
-              },
+          id: '0',
+          projectId: 0,
+          name: "How would you rate our service?",
+          description: '1 out of 5',
+          type: "NumberScale",
+          choiceQuestion: null,
+          textQuestion: null,
+          scaleQuestion: {
+            min: 0,
+            minDescription: "Icky",
+            max: 5,
+            maxDescription: "Great",
+            step: 1,
+          },
         },
         {
-            id: '1',
-            projectId: 0,
-            name: "Why did you rate us that way?",
-            description: 'Be descriptive',
-            type: "Text",
-            choiceQuestion: null,
-              textQuestion: {
-                placeholder: "Answer this...",
-                maxLength: 500,
-              },
-              scaleQuestion: null
+          id: '1',
+          projectId: 0,
+          name: "Why did you rate us that way?",
+          description: 'Be descriptive',
+          type: "Text",
+          choiceQuestion: null,
+          textQuestion: {
+            placeholder: "Answer this...",
+            maxLength: 500,
+          },
+          scaleQuestion: null
         },
         {
-            id: '2',
-            projectId: 0,
-            name: "Which most accurately describes your emotion?",
-            description: 'Choose one',
-            type: "MultipleChoice",
-            choiceQuestion: {
-                isMultiSelect: false,
-                isRandomized: false,
-                hasOtherOption: false,
-                otherOptionLabel: "Other",
-                choices: ["Angry", "Happy", "Furious", "Excited"],
-              },
-              textQuestion: null,
-              scaleQuestion: null
+          id: '2',
+          projectId: 0,
+          name: "Which most accurately describes your emotion?",
+          description: 'Choose one',
+          type: "MultipleChoice",
+          choiceQuestion: {
+            isMultiSelect: false,
+            isRandomized: false,
+            hasOtherOption: false,
+            otherOptionLabel: "Other",
+            choices: ["Angry", "Happy", "Furious", "Excited"],
+          },
+          textQuestion: null,
+          scaleQuestion: null
         },
       ],
     },
@@ -227,49 +228,49 @@ export const CreateScreen = ({ navigation }) => {
       numPages: 1,
       Question: [
         {
-            id: '0',
-            projectId: 0,
-            name: "How would you rate our service?",
-            description: '1 out of 5',
-            type: "NumberScale", 
-            choiceQuestion: null,
-              textQuestion: null,
-              scaleQuestion: {
-                min: 0,
-                minDescription: "Icky",
-                max: 5,
-                maxDescription: "Great",
-                step: 1,
-              },
+          id: '0',
+          projectId: 0,
+          name: "How would you rate our service?",
+          description: '1 out of 5',
+          type: "NumberScale",
+          choiceQuestion: null,
+          textQuestion: null,
+          scaleQuestion: {
+            min: 0,
+            minDescription: "Icky",
+            max: 5,
+            maxDescription: "Great",
+            step: 1,
+          },
         },
         {
-            id: '1',
-            projectId: 0,
-            name: "Why did you rate us that way?",
-            description: 'Be descriptive',
-            type: "Text",
-            choiceQuestion: null,
-              textQuestion: {
-                placeholder: "Answer this...",
-                maxLength: 500,
-              },
-              scaleQuestion: null
+          id: '1',
+          projectId: 0,
+          name: "Why did you rate us that way?",
+          description: 'Be descriptive',
+          type: "Text",
+          choiceQuestion: null,
+          textQuestion: {
+            placeholder: "Answer this...",
+            maxLength: 500,
+          },
+          scaleQuestion: null
         },
         {
-            id: '2',
-            projectId: 0,
-            name: "Which most accurately describes your emotion?",
-            description: 'Choose one',
-            type: "MultipleChoice",
-            choiceQuestion: {
-                isMultiSelect: false,
-                isRandomized: false,
-                hasOtherOption: false,
-                otherOptionLabel: "Other",
-                choices: ["Angry", "Happy", "Furious", "Excited"],
-              },
-              textQuestion: null,
-              scaleQuestion: null
+          id: '2',
+          projectId: 0,
+          name: "Which most accurately describes your emotion?",
+          description: 'Choose one',
+          type: "MultipleChoice",
+          choiceQuestion: {
+            isMultiSelect: false,
+            isRandomized: false,
+            hasOtherOption: false,
+            otherOptionLabel: "Other",
+            choices: ["Angry", "Happy", "Furious", "Excited"],
+          },
+          textQuestion: null,
+          scaleQuestion: null
         },
       ],
     },
@@ -295,49 +296,49 @@ export const CreateScreen = ({ navigation }) => {
       numPages: 1,
       Question: [
         {
-            id: '0',
-            projectId: 0,
-            name: "How would you rate our service?",
-            description: '1 out of 5',
-            type: "NumberScale", 
-            choiceQuestion: null,
-              textQuestion: null,
-              scaleQuestion: {
-                min: 0,
-                minDescription: "Icky",
-                max: 5,
-                maxDescription: "Great",
-                step: 1,
-              },
+          id: '0',
+          projectId: 0,
+          name: "How would you rate our service?",
+          description: '1 out of 5',
+          type: "NumberScale",
+          choiceQuestion: null,
+          textQuestion: null,
+          scaleQuestion: {
+            min: 0,
+            minDescription: "Icky",
+            max: 5,
+            maxDescription: "Great",
+            step: 1,
+          },
         },
         {
-            id: '1',
-            projectId: 0,
-            name: "Why did you rate us that way?",
-            description: 'Be descriptive',
-            type: "Text",
-            choiceQuestion: null,
-              textQuestion: {
-                placeholder: "Answer this...",
-                maxLength: 500,
-              },
-              scaleQuestion: null
+          id: '1',
+          projectId: 0,
+          name: "Why did you rate us that way?",
+          description: 'Be descriptive',
+          type: "Text",
+          choiceQuestion: null,
+          textQuestion: {
+            placeholder: "Answer this...",
+            maxLength: 500,
+          },
+          scaleQuestion: null
         },
         {
-            id: '2',
-            projectId: 0,
-            name: "Which most accurately describes your emotion?",
-            description: 'Choose one',
-            type: "MultipleChoice",
-            choiceQuestion: {
-                isMultiSelect: true,
-                isRandomized: false,
-                hasOtherOption: false,
-                otherOptionLabel: "Other",
-                choices: ["Angry", "Happy", "Furious", "Excited"],
-              },
-              textQuestion: null,
-              scaleQuestion: null
+          id: '2',
+          projectId: 0,
+          name: "Which most accurately describes your emotion?",
+          description: 'Choose one',
+          type: "MultipleChoice",
+          choiceQuestion: {
+            isMultiSelect: true,
+            isRandomized: false,
+            hasOtherOption: false,
+            otherOptionLabel: "Other",
+            choices: ["Angry", "Happy", "Furious", "Excited"],
+          },
+          textQuestion: null,
+          scaleQuestion: null
         },
       ],
     },
@@ -363,49 +364,49 @@ export const CreateScreen = ({ navigation }) => {
       numPages: 1,
       Question: [
         {
-            id: '0',
-            projectId: 0,
-            name: "How would you rate our service?",
-            description: '1 out of 5',
-            type: "NumberScale", 
-            choiceQuestion: null,
-              textQuestion: null,
-              scaleQuestion: {
-                min: 0,
-                minDescription: "Icky",
-                max: 5,
-                maxDescription: "Great",
-                step: 1,
-              },
+          id: '0',
+          projectId: 0,
+          name: "How would you rate our service?",
+          description: '1 out of 5',
+          type: "NumberScale",
+          choiceQuestion: null,
+          textQuestion: null,
+          scaleQuestion: {
+            min: 0,
+            minDescription: "Icky",
+            max: 5,
+            maxDescription: "Great",
+            step: 1,
+          },
         },
         {
-            id: '1',
-            projectId: 0,
-            name: "Why did you rate us that way?",
-            description: 'Be descriptive',
-            type: "Text",
-            choiceQuestion: null,
-              textQuestion: {
-                placeholder: "Answer this...",
-                maxLength: 500,
-              },
-              scaleQuestion: null
+          id: '1',
+          projectId: 0,
+          name: "Why did you rate us that way?",
+          description: 'Be descriptive',
+          type: "Text",
+          choiceQuestion: null,
+          textQuestion: {
+            placeholder: "Answer this...",
+            maxLength: 500,
+          },
+          scaleQuestion: null
         },
         {
-            id: '2',
-            projectId: 0,
-            name: "Which most accurately describes your emotion?",
-            description: 'Choose one',
-            type: "MultipleChoice",
-            choiceQuestion: {
-                isMultiSelect: false,
-                isRandomized: false,
-                hasOtherOption: false,
-                otherOptionLabel: "Other",
-                choices: ["Angry", "Happy", "Furious", "Excited"],
-              },
-              textQuestion: null,
-              scaleQuestion: null
+          id: '2',
+          projectId: 0,
+          name: "Which most accurately describes your emotion?",
+          description: 'Choose one',
+          type: "MultipleChoice",
+          choiceQuestion: {
+            isMultiSelect: false,
+            isRandomized: false,
+            hasOtherOption: false,
+            otherOptionLabel: "Other",
+            choices: ["Angry", "Happy", "Furious", "Excited"],
+          },
+          textQuestion: null,
+          scaleQuestion: null
         },
       ],
     },
@@ -439,6 +440,8 @@ export const CreateScreen = ({ navigation }) => {
   ];
 
   const [showSettings, setShowSettings] = useState(false);
+  const [projects, setProjects] = useState(initProjects);
+  const [searchString, setSearchString] = useState('');
   const [activeProject, setActiveProject] = useState();
   const [page, setPage] = useState('Surveys');
 
@@ -450,20 +453,24 @@ export const CreateScreen = ({ navigation }) => {
     setPage('Questions');
   }
 
+  function searchStringInArray(searchText) {
+    setSearchString(searchText);
+    if (searchText === '' || searchText === ' ') {
+      setProjects(initProjects);
+    } else {
+      let result = initProjects.filter(
+        (item) => item.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1
+      );
+      setProjects(result);
+    }
+
+  }
+
   return (
     <View style={page === 'Questions' || page === 'Design' ? styles.sectionContainer : styles.sectionContainer2}>
       {page === 'Surveys' && <>
         <View style={styles.buttonsContainer}>
-          <Pressable
-            style={({ pressed }) => pressed ? styles.actionButtonPressed : styles.actionButton}
-            onPress={() => alert('Actions Dropdown Pressed')}>
-            {({ pressed }) => (
-              <View style={styles.actionTextContainer}>
-                <Text style={pressed ? styles.actionTextPressed : styles.actionText}>Actions {' '}</Text>
-                <View><IonIcons name='chevron-down' size={20} style={{ color: '#A3A4A8' }}></IonIcons></View>
-              </View>
-            )}
-          </Pressable>
+          <ReactionSearchInput placeholder={'Search Surveys'} value={searchString} onChange={searchStringInArray}></ReactionSearchInput>
         </View>
         <ReactionTable rowClick={handleSurveyClick} headers={headers} items={projects} showSettings={showSettings} setShowSettings={setShowSettings} setActive={setActiveProject} activeItem={activeProject}></ReactionTable>
         <View style={styles.createButton}><ButtonGeneric onPress={() => alert('This is the Create Survey Screen.')} title='Create Survey'></ButtonGeneric></View>
@@ -495,10 +502,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   buttonsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    // display: 'flex',
+    // flexDirection: 'row',
+    // alignItems: 'center',
+    // justifyContent: 'space-between',
     paddingBottom: 10,
 
   },
