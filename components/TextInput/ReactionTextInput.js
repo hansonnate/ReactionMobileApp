@@ -14,7 +14,9 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 export const ReactionTextInput = ({ placeholder, label, value, onChange, index, textContentType, error, errorMessage }) => {
     // const [text, onChangeText] = useState(value);
-    const [changed, setChanged] = useState(false);
+    // const [changed, setChanged] = useState(false);
+    const [focus, setFocus] = useState(false);
+    // const [focus, setFocus] = useState(false);
 
 
     function handleChange(newvalue) {
@@ -34,12 +36,13 @@ export const ReactionTextInput = ({ placeholder, label, value, onChange, index, 
                 {error && <Text style={styles.errorMessage}>{errorMessage ? errorMessage : "Error..."}</Text>}
             </View>}
             <TextInput
-                style={!changed ? styles.input : styles.inputChanged}
+                style={focus ? styles.inputFocus : styles.input}
                 onChangeText={handleChange}
                 value={value}
                 placeholder={placeholder ? placeholder : "Enter..."}
                 textContentType={textContentType ? textContentType : 'none'}
-
+                onFocus={() => setFocus(true)}
+                onEndEditing={() => setFocus(false)}
             // onBlur={() => onBlur}
             />
         </View>
@@ -58,6 +61,17 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 5,
         borderColor: "#E9E9E9",
+        paddingHorizontal: 5,
+        paddingVertical: 7,
+        fontFamily: 'Gill Sans',
+        color: '#616565',
+        fontSize: 18,
+    },
+    inputFocus: {
+        // height: 45,
+        borderWidth: 2,
+        borderRadius: 5,
+        borderColor: "#A627C",
         paddingHorizontal: 5,
         paddingVertical: 7,
         fontFamily: 'Gill Sans',

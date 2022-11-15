@@ -111,7 +111,7 @@ export const CreateSurveyModal = ({ setShow, createProject }) => {
                 <ReactionSelectInput isMultiple chosenList={selectedDefLang} chooseList={defaultLanguages} label={"Default Languages"} placeholder={"No Default Languages Chosen"} value={project?.description} setChosen={onSelectedDefLangChange} setChooseList={setDefaultLanguages}></ReactionSelectInput>
                 <ReactionSelectInput isMultiple chosenList={selectedSupLang} chooseList={supportedLanguages} label={"Supported Languages"} placeholder={"No Supported Languages Chosen"} value={project?.description} setChosen={onSelectedSupLangChange} setChooseList={setSupportedLanguages}></ReactionSelectInput>
                 <ReactionSelectInput chosenSingle={status} label='Status' setChosenSingle={setStatus} chooseList={statuss}></ReactionSelectInput> 
-                <View style={{ paddingHorizontal: 60, paddingTop: 10 }}><ButtonGeneric onPress={() => { handleCreateProject(); setShow(false); }} title='Create'></ButtonGeneric></View>
+                <View style={{ paddingHorizontal: 60, paddingTop: 10, paddingBottom: 10}}><ButtonGeneric onPress={() => { handleCreateProject(); setShow(false); }} title='Create'></ButtonGeneric></View>
             </ScrollView>
         </View>
     );

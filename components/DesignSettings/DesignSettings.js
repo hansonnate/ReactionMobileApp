@@ -12,14 +12,16 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import { ButtonGeneric } from '../Buttons/ButtonGeneric';
 import { ButtonPill } from '../Buttons/ButtonPill';
-import { ReactionSelectInput } from '../SelectInput/ReactionSelectInput';
+// import { ReactionSelectInput } from '../SelectInput/ReactionSelectInput';
+// import { ColorPicker } from 'react-native-color-picker';
+import { ReactionColorPicker } from '../ColorPicker/ReactionColorPicker';
 // import MultiSelect from 'react-native-multiple-select';
 // import { Text } from 'react-native';
 
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const ProjectSettings = ({ setShowSettings, project, saveChanges, setDisable }) => {
+export const DesignSettings = ({ setShowSettings, project, saveChanges, setDisable }) => {
 
 
     const newtags = [
@@ -76,34 +78,30 @@ export const ProjectSettings = ({ setShowSettings, project, saveChanges, setDisa
 
 
     const [selectedTags, onSelectedItemsChange] = useState(chosenTags);
-    const [tags, setTags] = useState(newtags);
+    // const [tags, setTags] = useState(newtags);
     const [selectedAccessGroups, onSelectedAGChange] = useState(chosenAccessGroups);
-    const [accessGroups, setAccessGroups] = useState(newAccessGroups);
+    // const [accessGroups, setAccessGroups] = useState(newAccessGroups);
     const [selectedDefLang, onSelectedDefLangChange] = useState(chosenLanguages);
-    const [defaultLanguages, setDefaultLanguages] = useState(newLanguages);
+    // const [defaultLanguages, setDefaultLanguages] = useState(newLanguages);
     const [selectedSupLang, onSelectedSupLangChange] = useState(chosenLanguages);
-    const [supportedLanguages, setSupportedLanguages] = useState(newLanguages);
+    // const [supportedLanguages, setSupportedLanguages] = useState(newLanguages);
     const [name, setName] = useState(project.name);
     const [description, setDescription] = useState(project.description);
     const [status, setStatus] = useState(project.status);
-  
+
     return (
         <View style={styles.sectionContainer}>
             <Pressable onPress={() => handleClose()} style={styles.closeIcon}><IonIcons name='close' size={20} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
-            <ScrollView style={{paddingTop: 5}}>
-                <ReactionTextInput label={"Survey Name"} placeholder={"Survey Name"} value={name} onChange={setName}></ReactionTextInput>
+            <View style={{ paddingTop: 5 }}>
+                <ReactionTextInput label={"Design Name"} placeholder={"Survey Name"} value={name} onChange={setName}></ReactionTextInput>
                 <ReactionTextInput label={"Description"} placeholder={"Description"} value={description} onChange={setDescription}></ReactionTextInput>
-                <ReactionSelectInput isMultiple chosenList={selectedTags} chooseList={tags} label={"Tags"} placeholder={"No Tags Chosen"} value={project?.description} setChosen={onSelectedItemsChange} setChooseList={setTags}></ReactionSelectInput>
-                <ReactionSelectInput isMultiple chosenList={selectedAccessGroups} chooseList={accessGroups} label={"Access Groups"} placeholder={"No Access Groups Chosen"} value={project?.description} setChosen={onSelectedAGChange} setChooseList={setAccessGroups}></ReactionSelectInput>
-                <ReactionSelectInput isMultiple chosenList={selectedDefLang} chooseList={defaultLanguages} label={"Default Languages"} placeholder={"No Default Languages Chosen"} value={project?.description} setChosen={onSelectedDefLangChange} setChooseList={setDefaultLanguages}></ReactionSelectInput>
-                <ReactionSelectInput isMultiple chosenList={selectedSupLang} chooseList={supportedLanguages} label={"Supported Languages"} placeholder={"No Supported Languages Chosen"} value={project?.description} setChosen={onSelectedSupLangChange} setChooseList={setSupportedLanguages}></ReactionSelectInput>
-                <ReactionSelectInput chosenSingle={status} label='Status' setChosenSingle={setStatus} chooseList={statuss}></ReactionSelectInput> 
+                <ReactionColorPicker></ReactionColorPicker>
                 <View style={{ paddingHorizontal: 60, paddingTop: 10 }}><ButtonGeneric onPress={() => { handleSaveChanges(); setShowSettings(false); }} title='Save Changes'></ButtonGeneric></View>
                 <View style={styles.bottomButtons}>
                     <ButtonPill onPress={() => Alert.prompt('Are you sure you want to delete this survey?\n(Enter \'Delete\' to confirm)')} title='Delete Survey'></ButtonPill>
                     <ButtonPill onPress={() => Alert.prompt('Are you sure you want to copy this survey?\n(Enter \'Copy\' to confirm)')} title='Copy Survey'></ButtonPill>
                 </View>
-            </ScrollView>
+            </View>
         </View>
     );
 

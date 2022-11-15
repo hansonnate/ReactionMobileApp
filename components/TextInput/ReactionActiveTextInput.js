@@ -15,6 +15,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 export const ReactionActiveTextInput = ({ placeholder, label, value, onChange, active, italics, error, errorMessage }) => {
     // const [text, onChangeText] = useState(value);
     // const [changed, setChanged] = useState(false);
+    const [focus, setFocus] = useState(false);
 
 
     // function handleChange(newvalue) {
@@ -33,10 +34,12 @@ export const ReactionActiveTextInput = ({ placeholder, label, value, onChange, a
                 {error && <Text style={styles.errorMessage}>{errorMessage ? errorMessage : "Error..."}</Text>}
             </View>}
             {active && <TextInput
-                style={styles.inputActive}
+                style={focus ? styles.inputActiveFocus : styles.inputActive}
                 onChangeText={onChange}
                 value={value}
                 placeholder={placeholder ? placeholder : "Enter..."}
+                onFocus={() => setFocus(true)}
+                onEndEditing={() => setFocus(false)}
             // keyboardType="number-pad"
             />}
             {!active && <Text
@@ -63,6 +66,17 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 5,
         borderColor: "#E9E9E9",
+        paddingHorizontal: 5,
+        paddingVertical: 7,
+        fontFamily: 'Gill Sans',
+        color: '#616565',
+        fontSize: 18,
+    },
+    inputActiveFocus: {
+        height: 40,
+        borderWidth: 2,
+        borderRadius: 5,
+        borderColor: "#2A627C",
         paddingHorizontal: 5,
         paddingVertical: 7,
         fontFamily: 'Gill Sans',

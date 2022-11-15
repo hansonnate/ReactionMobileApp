@@ -5,7 +5,7 @@
  */
 
 //External imports
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, Text } from 'react-native';
 // import { Text } from 'react-native';
 
@@ -13,6 +13,7 @@ import { View, StyleSheet, TextInput, Text } from 'react-native';
 // import styles from 'Navbar.module.scss'
 
 export const TextQuestion = ({active, textQuestion}) => {
+    const [focus, setFocus] = useState(false);
 
 
     return (
@@ -23,8 +24,9 @@ export const TextQuestion = ({active, textQuestion}) => {
                 numberOfLines={7}
                 maxLength={textQuestion.maxLength}
                 placeholder={textQuestion.placeholder ? textQuestion.placeholder : 'Answer Here...'}
-                style={styles.textStyle}>
-
+                onFocus={() => setFocus(true)}
+                onEndEditing={() => setFocus(false)}
+                style={focus ? styles.textStyleFocus : styles.textStyle}>
             </TextInput> }
             {!active && <Text style={styles.textStaticStyle}>{textQuestion.placeholder ? textQuestion.placeholder : 'Answer Here...'}</Text> }
         </View>
@@ -34,8 +36,6 @@ export const TextQuestion = ({active, textQuestion}) => {
 
 const styles = StyleSheet.create({
     textStyle: {
-        // fontSize: 26,
-        // fontWeight: 'bold'
         borderWidth: 2,
         borderRadius: 5,
         borderColor: "#E9E9E9",
@@ -45,9 +45,17 @@ const styles = StyleSheet.create({
         color: '#616565',
         fontSize: 17,
     },
+    textStyleFocus: {
+        borderWidth: 2,
+        borderRadius: 5,
+        borderColor: "#2A627C",
+        height: 90,
+        padding: 10,
+        fontFamily: 'Gill Sans',
+        color: '#616565',
+        fontSize: 17,
+    },
     textStaticStyle: {
-        // fontSize: 26,
-        // fontWeight: 'bold'
         borderWidth: 2,
         borderRadius: 5,
         borderColor: "#E9E9E9",

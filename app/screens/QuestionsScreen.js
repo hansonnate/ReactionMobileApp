@@ -15,19 +15,23 @@ import { Question } from '../../components/Questions/Question';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import { AddQuestionModal } from '../../components/Questions/AddQuestionModal';
 import { QuestionOptionsModal } from '../../components/Questions/QuestionOptionsModal';
+import { ProjectSettings } from '../../components/ProjectSettings/ProjectSettings';
+import { DesignSettings } from '../../components/DesignSettings/DesignSettings';
 // import { Text } from 'react-native';
 
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const QuestionsScreen = ({ initQuestions, setPage, projectName }) => {
+export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSettings }) => {
 
 
     const [activeQuestionId, setActiveQuestionId] = useState();
-    // const [activeQuestion, setActiveQuestion] = useState(initQuestions[0]);
     const [questions, setQuestions] = useState(initQuestions);
     const [showNewQuestion, setShowNewQuestion] = useState(false);
     const [showOptions, setShowOptions] = useState(false);
+    const [showProjectSettings, setShowProjectSettings] = useState(false);
+    const [showDesignSettings, setShowDesignSettings] = useState(false);
+    const [disableButtons, setDisableButtons] = useState(false);
 
     function handleNewQuestion(question) {
         let array = [...questions];
@@ -127,30 +131,32 @@ export const QuestionsScreen = ({ initQuestions, setPage, projectName }) => {
 
     return (
         <View style={styles.sectionContainer}>
-                        {/* <View style={{display:'flex', flexDirection:'row', justifyContent:'center', paddingTop : 5}}><Text style={styles.heading}>{projectName}</Text></View> */}
+            {/* <View style={{display:'flex', flexDirection:'row', justifyContent:'center', paddingTop : 5}}><Text style={styles.heading}>{projectName}</Text></View> */}
             <View style={styles.topButtons}>
                 <ButtonPillBack title={'Surveys'} left onPress={() => setPage('Surveys')}></ButtonPillBack>
-                <ButtonPillBack title={'Design'} right onPress={() => setPage('Design')}></ButtonPillBack>
+                <Pressable style={styles.actionButton} onPress={() => { setShowProjectSettings(!showProjectSettings); setDisableButtons(true) }}><View style={styles.bottomButtons}><Text style={styles.text}>survey settings</Text><IonIcons name='chevron-down' size={20} style={{ color: '#15BCC7', }}></IonIcons></View></Pressable>
             </View>
 
             {!showOptions && <ScrollView>
-                {questions.map((question, index) => <Question key={index} onUpdateQuestion={handleUpdateQuestion} question={question} questionIndex={index} active={question.id === activeQuestionId} setActive={setActiveQuestionId}></Question>)}
+                {questions.map((question, index) => <Question key={index} onUpdateQuestion={handleUpdateQuestion} question={question} questionIndex={index} active={question.id === activeQuestionId} setActive={setActiveQuestionId} setShowSettings={setShowOptions} showSettings={showOptions}></Question>)}
             </ScrollView>}
             {showOptions && <View style={styles.optionsActive}><ScrollView >{displayActiveQuestion()}</ScrollView></View>}
             {!showOptions && <><View style={styles.bottomButtons}>
-                <ButtonAddMinus title={'question'} plus onPress={() => setShowNewQuestion(true)}></ButtonAddMinus>
-                <Pressable style={styles.actionButton} onPress={() => setShowOptions(true)}><View style={styles.bottomButtons}><Text style={styles.text}>options</Text><IonIcons name='chevron-down' size={20} style={{ color: '#A3A4A8' }}></IonIcons></View></Pressable>
+                <ButtonAddMinus disable={disableButtons} title={'question'} plus onPress={() => setShowNewQuestion(true)} shadow></ButtonAddMinus>
+                <Pressable disabled={disableButtons} style={styles.actionButton} onPress={() => setShowDesignSettings(!showDesignSettings)}><View style={styles.bottomButtons}><Text style={styles.text}>design settings</Text><IonIcons name='chevron-down' size={20} style={{ color: '#15BCC7', }}></IonIcons></View></Pressable>
             </View>
-                <View style={styles.bottomButtons}>
-                    {/* <ButtonAddMinus title={'question'} plus onPress={() => alert('Added Question')}></ButtonAddMinus> */}
-                    <ButtonAddMinus title={'page'} minus onPress={() => alert('Removed Page')}></ButtonAddMinus>
-                    <ButtonAddMinus title={'page'} plus onPress={() => alert('Added page')}></ButtonAddMinus>
-                    <Pressable style={styles.buttonStyle}><IonIcons name='chevron-back' size={20} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
-                    <Pressable style={styles.buttonStyle}><Text style={{ color: '#A3A4A8', fontWeight: 'bold' }}>1</Text></Pressable>
-                    <Pressable style={styles.buttonStyle}><IonIcons name='chevron-forward' size={20} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
-                </View></>}
+                {/* <View style={styles.bottomButtons}>
+                    <ButtonAddMinus disable={disableButtons} title={'page'} minus onPress={() => alert('Removed Page')} shadow></ButtonAddMinus>
+                    <ButtonAddMinus disable={disableButtons} title={'page'} plus onPress={() => alert('Added page')} shadow></ButtonAddMinus>
+                    <Pressable style={styles.buttonStyle} disabled={disableButtons}><IonIcons name='chevron-back' size={20} style={{ color: '#15BCC7', }}></IonIcons></Pressable>
+                    <Pressable style={styles.buttonStyle} disabled={disableButtons}><Text style={{ color: '#15BCC7', fontWeight: 'bold' }}>1</Text></Pressable>
+                    <Pressable style={styles.buttonStyle} disabled={disableButtons}><IonIcons name='chevron-forward' size={20} style={{ color: '#15BCC7', }}></IonIcons></Pressable>
+                </View> */}
+            </>}
             <AddQuestionModal show={showNewQuestion} setShow={setShowNewQuestion} createQuestion={handleNewQuestion}></AddQuestionModal>
             {activeQuestionId && <QuestionOptionsModal show={showOptions} setShow={setShowOptions} currQuestion={activeQuestion()} saveQuestion={handleSaveQuestion} changeType={handleChangeType} deleteQuestion={deleteQuestionAlert}></QuestionOptionsModal>}
+            {showProjectSettings && <View style={styles.settingsContainer}><ProjectSettings setShowSettings={setShowProjectSettings} project={project} saveChanges={saveProjectSettings} setDisable={setDisableButtons}></ProjectSettings></View>}
+            {showDesignSettings && <View style={styles.settingsContainer}><DesignSettings setShowSettings={setShowDesignSettings} project={project} saveChanges={saveProjectSettings} setDisable={setDisableButtons}></DesignSettings></View>}
         </View>
     );
 
@@ -163,7 +169,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         // alignItems: 'center',
         // justifyContent: 'center',
-        backgroundColor: '#EFEFEF'
+        // backgroundColor: '#EFEFEF',
+        backgroundColor: '#B5E1DF',
+        paddingBottom: 5
     },
     topButtons: {
         display: 'flex',
@@ -179,7 +187,8 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-between',
         paddingHorizontal: 10,
-        paddingVertical: 5,
+        paddingTop: 10,
+        paddingBottom: 5,
     },
     buttonStyle: {
         display: 'flex',
@@ -191,6 +200,14 @@ const styles = StyleSheet.create({
         borderColor: '#E9E9E9',
         backgroundColor: 'white',
         width: 35,
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        maxHeight: 600,
+        elevation: 9,
     },
     actionButton: {
         display: 'flex',
@@ -201,12 +218,20 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderColor: '#E9E9E9',
         backgroundColor: 'white',
-        width: 105,
+        width: 170,
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        maxHeight: 600,
+        elevation: 9,
     },
     text: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#A3A4A8',
+        color: '#15BCC7',
         marginRight: 5,
     },
     optionsActive: {
@@ -218,5 +243,10 @@ const styles = StyleSheet.create({
         // fontWeight: 'bold',
         fontFamily: 'Gill Sans',
         color: '#616565',
+    },
+    settingsContainer: {
+        position: 'absolute',
+        backgroundColor: '#EFEFEF',
+        width: 370,
     }
 });

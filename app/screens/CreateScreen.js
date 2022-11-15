@@ -475,6 +475,14 @@ export const CreateScreen = ({ navigation }) => {
     setProjects(array);
   };
 
+  function handleSaveProjectChanges(project) {
+    console.log(project.name);
+    let array = [...projects];
+    let index = array.findIndex(obj => obj.id === project.id);
+    array[index] = project;
+    setProjects(array);
+  };
+
   return (
     <View style={page === 'Questions' || page === 'Design' ? styles.sectionContainer : styles.sectionContainer2}>
       {page === 'Surveys' && <>
@@ -482,11 +490,11 @@ export const CreateScreen = ({ navigation }) => {
           <ReactionSearchInput placeholder={'Search Surveys'} value={searchString} onChange={searchStringInArray}></ReactionSearchInput>
         </View>
         <ReactionTable rowClick={handleSurveyClick} headers={headers} items={projects} showSettings={showSettings} setShowSettings={setShowSettings} setActive={setActiveProject} activeItem={activeProject}></ReactionTable>
-        <View style={styles.createButton}><ButtonGeneric onPress={() => setShowCreate(true)} title='Create Survey'></ButtonGeneric></View>
-        {showSettings && <ProjectSettings setShowSettings={setShowSettings} project={activeProject}></ProjectSettings>}
+        <View style={styles.createButton}><ButtonGeneric shadow onPress={() => setShowCreate(true)} title='Create Survey'></ButtonGeneric></View>
+        {showSettings && <ProjectSettings setShowSettings={setShowSettings} project={activeProject} saveChanges={handleSaveProjectChanges}></ProjectSettings>}
         {showCreate && <CreateSurveyModal setShow={setShowCreate} createProject={handleCreateProject}></CreateSurveyModal>}
       </>}
-      {page === 'Questions' && <QuestionsScreen initQuestions={activeProject.Question} setPage={setPage} projectName={activeProject.name}></QuestionsScreen>}
+      {page === 'Questions' && <QuestionsScreen initQuestions={activeProject.Question} setPage={setPage} project={activeProject} saveProjectSettings={handleSaveProjectChanges}></QuestionsScreen>}
     </View>
   );
 

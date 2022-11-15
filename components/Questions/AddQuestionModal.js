@@ -139,8 +139,8 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
                         <ReactionSelectInput chooseList={questionTypes} chosenSingle={chosenType} setChosenSingle={setChosenType} label='Choose Question Type'></ReactionSelectInput>
                         <ReactionActiveTextInput value={question.name} active={true} label={'Question Name'} error={noName} errorMessage='Type Question Name' onChange={handleUpdateName}>{question.name}</ReactionActiveTextInput>
                         <ReactionActiveTextInput italics value={question.description} active={true} label={'Instructions'} onChange={handleUpdateInstructions}>{question.name}</ReactionActiveTextInput>
-                        {chosenType == "Text" && <TextQuestion active={true} textQuestion={question.textQuestion}></TextQuestion>}
-                        {chosenType == "Number Scale" && <ScaleQuestion active={true} scaleQuestion={question.scaleQuestion}></ScaleQuestion>}
+                        {/* {chosenType == "Text" && <TextQuestion new active={true} textQuestion={question.textQuestion}></TextQuestion>}
+                        {chosenType == "Number Scale" && <ScaleQuestion active={true} scaleQuestion={question.scaleQuestion}></ScaleQuestion>} */}
                         {chosenType == "Multiple Choice" && <MultipleChoiceQuestion active={true} choiceQuestion={question.choiceQuestion} updateQuestion={handleUpdateChoices}></MultipleChoiceQuestion>}
                     </View>
                     <ButtonGeneric title={'Create Question'} onPress={() => handleCreateQuestion()}></ButtonGeneric>
