@@ -30,7 +30,7 @@ export const ReactionTable = ({ noSettings, headers, items, showSettings, setSho
                   {header.name == 'Status' && <View style={row[header.accessor] == 'Open' ? styles.statusContainerOpen : row[header.accessor] == 'Closed' ? styles.statusContainerClosed : styles.statusContainerDraft}><Text style={row[header.accessor] == 'Open' ? styles.statusOpen : row[header.accessor] == 'Closed' ? styles.statusClosed : styles.statusDraft}>{row[header.accessor]}</Text></View>}
                 </DataTable.Cell>
               )}
-              {!noSettings && <DataTable.Cell style={styles.settingsCell}><Pressable onPress={() => { setShowSettings(!showSettings); setActive(row); }} title='Create Survey'><IonIcons name='cog' color={'#616565'} size={20}></IonIcons></Pressable></DataTable.Cell>}
+              {!noSettings && <DataTable.Cell style={styles.settingsCell}><Pressable onPress={() => { setShowSettings(!showSettings); setActive(row); }} title='Create Survey' style={{paddingVertical: 5}}><IonIcons name='cog' color={'#616565'} size={20}></IonIcons></Pressable></DataTable.Cell>}
             </DataTable.Row>
           )}
         </DataTable>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   // scrollView: { flex: 1 },
   head: { fontFamily: 'Arial', backgroundColor: '#F9F9F9', borderRadius: 5, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderBottomWidth: 3, borderColor: "#E9E9E9", paddingLeft: 20, height: 40 },
   row: { paddingLeft: 20, paddingTop: 5 },
-  settingsCell: { flex: .5, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 5 },
+  settingsCell: { flex: .5, display: 'flex', flexDirection: 'column', justifyContent: 'center', },
   cell: { flex: 4, display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' },
   statusCell: { flex: 2, paddingLeft: 5, display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' },
   statusClosed: { fontFamily: 'Gill Sans', paddingHorizontal: 5, color: '#FF5B5B', paddingVertical: 5, textAlign: 'center', fontSize: 20 },

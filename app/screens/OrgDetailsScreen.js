@@ -5,21 +5,38 @@
  */
 
 //External imports
-import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-// import { Text } from 'react-native';
-
+import React, { useEffect } from 'react';
+import { View, StyleSheet, Animated, Easing } from 'react-native';
+// import assets from '../../assets';
+import LottieView from 'lottie-react-native';
 //Internal imports
-// import styles from 'Navbar.module.scss'
+
 
 export const OrgDetailsScreen = () => {
 
+// const [lottieProgress] = useState()
+
+// useEffect(() => {
+//     Animated.loop(
+//       Animated.timing(new Animated(0), {
+//         toValue: 1,
+//         duration: 5000,
+//         easing: Easing.linear,
+//         useNativeDriver: true,
+//       }),
+//     ).start();
+//   }, []);
 
     return (
         <View style={styles.sectionContainer}>
-            <Text
-                onPress={() => alert('This is the Org Details Screen.')}
-                style={styles.textStyle}>Organization Details Screen</Text>
+            <LottieView
+                // progress={lottieProgress}
+                autoplay
+                loop
+                source={require('../../assets/construction.json')}
+                // style={{height: 100, width: 100}}
+                // colorFilters={[{ keypath: 'construction', color: '#E9E9E9' }]}
+            />
         </View>
     );
 
@@ -29,10 +46,7 @@ const styles = StyleSheet.create({
     sectionContainer: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
-    },
-    textStyle: {
-        fontSize: 26,
-        fontWeight: 'bold'
+        justifyContent: 'center',
+
     },
 });

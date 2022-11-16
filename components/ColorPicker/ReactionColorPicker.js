@@ -14,15 +14,15 @@ import { ColorPicker } from 'react-native-color-picker';
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const ReactionColorPicker = (initColor) => {
-    const [color, setColor] = useState(initColor ? initColor : '#000');
+export const ReactionColorPicker = ({initColor}) => {
+    const [color, setColor] = useState(initColor ? initColor : '#B5E1DF');
 
     return (
         <View style={styles.sectionContainer}>
             <ColorPicker
                 onColorSelected={color => alert(`Color selected: ${color}`)}
                 // color={color}
-                // defaultColor={'#000'}
+                defaultColor={color}
                 // onColorChange={setColor}
                 style={{ height: 200}}
             />
@@ -33,11 +33,12 @@ export const ReactionColorPicker = (initColor) => {
 
 const styles = StyleSheet.create({
     sectionContainer: {
-        // flex: 1,
+        flex: 1,
         borderColor: '#E9E9E9',
         borderWidth: 2,
         borderRadius: 5,
         padding: 5,
         zIndex: 20,
+        width: 200
     },
 });

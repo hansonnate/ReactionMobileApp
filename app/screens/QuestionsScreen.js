@@ -17,6 +17,7 @@ import { AddQuestionModal } from '../../components/Questions/AddQuestionModal';
 import { QuestionOptionsModal } from '../../components/Questions/QuestionOptionsModal';
 import { ProjectSettings } from '../../components/ProjectSettings/ProjectSettings';
 import { DesignSettings } from '../../components/DesignSettings/DesignSettings';
+import { BlurView } from '@react-native-community/blur';
 // import { Text } from 'react-native';
 
 //Internal imports
@@ -157,12 +158,31 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
             {activeQuestionId && <QuestionOptionsModal show={showOptions} setShow={setShowOptions} currQuestion={activeQuestion()} saveQuestion={handleSaveQuestion} changeType={handleChangeType} deleteQuestion={deleteQuestionAlert}></QuestionOptionsModal>}
             {showProjectSettings && <View style={styles.settingsContainer}><ProjectSettings setShowSettings={setShowProjectSettings} project={project} saveChanges={saveProjectSettings} setDisable={setDisableButtons}></ProjectSettings></View>}
             {showDesignSettings && <View style={styles.settingsContainer}><DesignSettings setShowSettings={setShowDesignSettings} project={project} saveChanges={saveProjectSettings} setDisable={setDisableButtons}></DesignSettings></View>}
+            {(showProjectSettings || showDesignSettings || showNewQuestion) && <BlurView
+                // viewRef={viewRef}
+                style={styles.blurViewStyle}
+                blurRadius={2}
+                blurAmount={1}
+            // blurType={blurType}
+            // Additional available on Android
+            // blurRadius={20}
+            // downsampleFactor={10}
+            // overlayColor={'rgba(0, 0, 255, .6)'}
+            />}
         </View>
     );
 
 };
 
 const styles = StyleSheet.create({
+    blurViewStyle: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        height: 900,
+        width: 500,
+        zIndex: 0,
+    },
     sectionContainer: {
         flex: 1,
         display: 'flex',
@@ -248,5 +268,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: '#EFEFEF',
         width: 370,
+        zIndex: 1
     }
 });

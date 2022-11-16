@@ -111,6 +111,7 @@ export const ProjectSettings = ({ setShowSettings, project, saveChanges, setDisa
 
 const styles = StyleSheet.create({
     sectionContainer: {
+        zIndex: 1,
         position: 'absolute',
         top: 30,
         width: '100%',

@@ -6,7 +6,8 @@
 
 //External imports
 import React, { useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, } from 'react-native';
+import { BlurView } from '@react-native-community/blur';
 // import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 // import { Text } from 'react-native';
 
@@ -492,6 +493,17 @@ export const CreateScreen = ({ navigation }) => {
         <ReactionTable rowClick={handleSurveyClick} headers={headers} items={projects} showSettings={showSettings} setShowSettings={setShowSettings} setActive={setActiveProject} activeItem={activeProject}></ReactionTable>
         <View style={styles.createButton}><ButtonGeneric shadow onPress={() => setShowCreate(true)} title='Create Survey'></ButtonGeneric></View>
         {showSettings && <ProjectSettings setShowSettings={setShowSettings} project={activeProject} saveChanges={handleSaveProjectChanges}></ProjectSettings>}
+        {showSettings && <BlurView
+          // viewRef={viewRef}
+          style={styles.blurViewStyle}
+          blurRadius={2}
+          blurAmount={1}
+        // blurType={blurType}
+        // Additional available on Android
+        // blurRadius={20}
+        // downsampleFactor={10}
+        // overlayColor={'rgba(0, 0, 255, .6)'}
+        />}
         {showCreate && <CreateSurveyModal setShow={setShowCreate} createProject={handleCreateProject}></CreateSurveyModal>}
       </>}
       {page === 'Questions' && <QuestionsScreen initQuestions={activeProject.Question} setPage={setPage} project={activeProject} saveProjectSettings={handleSaveProjectChanges}></QuestionsScreen>}
@@ -503,6 +515,14 @@ export const CreateScreen = ({ navigation }) => {
 
 
 const styles = StyleSheet.create({
+  blurViewStyle: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    height: 900,
+    width: 500,
+    zIndex: 0
+  },
   sectionContainer: {
     flex: 1,
     backgroundColor: 'white'

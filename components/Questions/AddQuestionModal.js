@@ -154,8 +154,9 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
 const styles = StyleSheet.create({
     absoluteContainer: {
         position: 'absolute',
-        bottom: 50,
+        top: 160,
         width: '100%',
+        zIndex: 1,
         // backgroundColor: 'black',
     },
     sectionContainer: {
