@@ -12,7 +12,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const ReactionActiveTextInput = ({ placeholder, label, value, onChange, active, italics, error, errorMessage }) => {
+export const ReactionActiveTextInput = ({ placeholder, label, value, onChange, active, italics, error, errorMessage, setOnFocus }) => {
     // const [text, onChangeText] = useState(value);
     // const [changed, setChanged] = useState(false);
     const [focus, setFocus] = useState(false);
@@ -25,6 +25,18 @@ export const ReactionActiveTextInput = ({ placeholder, label, value, onChange, a
     //     // } else if (!changed) {
     //     //     setChanged(true);
     //     // }
+    function handlefocus() {
+        setFocus(true);
+        if (setOnFocus) {
+            setOnFocus(true);
+        }
+    }
+    function handleLeaveFocus() {
+        setFocus(false)
+        if (setOnFocus) {
+            setOnFocus(false);
+        }
+    }
 
     // }
     return (
@@ -38,8 +50,8 @@ export const ReactionActiveTextInput = ({ placeholder, label, value, onChange, a
                 onChangeText={onChange}
                 value={value}
                 placeholder={placeholder ? placeholder : "Enter..."}
-                onFocus={() => setFocus(true)}
-                onEndEditing={() => setFocus(false)}
+                onFocus={handlefocus}
+                onEndEditing={handleLeaveFocus}
             // keyboardType="number-pad"
             />}
             {!active && <Text

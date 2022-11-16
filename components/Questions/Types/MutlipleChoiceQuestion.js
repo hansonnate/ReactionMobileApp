@@ -15,7 +15,7 @@ import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const MultipleChoiceQuestion = ({ active, choiceQuestion, updateQuestion }) => {
+export const MultipleChoiceQuestion = ({ active, choiceQuestion, updateQuestion, setOnFocus }) => {
 
     const [choice, setChoice] = useState(choiceQuestion);
 
@@ -43,7 +43,7 @@ export const MultipleChoiceQuestion = ({ active, choiceQuestion, updateQuestion 
         <View style={{ paddingTop: 5 }}>
             {active && <Text style={styles.label}>CHOICES</Text>}
             {active && choice.choices.map((value, index) => <View key={index} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                <View style={{width: '94%'}}><ReactionTextInput key={index} value={value} onChange={changeChoice} index={index}></ReactionTextInput></View>
+                <View style={{width: '94%'}}><ReactionTextInput setOnFocus={setOnFocus} key={index} value={value} onChange={changeChoice} index={index}></ReactionTextInput></View>
                 <Pressable onPress={() => deleteChoice(index, value)} style={styles.closeIcon}>
                     <IonIcons name='close' size={20} style={{ color: '#A3A4A8' }}></IonIcons>
                 </Pressable>

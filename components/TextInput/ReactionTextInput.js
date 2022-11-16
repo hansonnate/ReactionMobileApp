@@ -12,7 +12,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const ReactionTextInput = ({ placeholder, label, value, onChange, index, textContentType, error, errorMessage }) => {
+export const ReactionTextInput = ({ placeholder, label, value, onChange, index, textContentType, error, errorMessage, setOnFocus }) => {
     // const [text, onChangeText] = useState(value);
     // const [changed, setChanged] = useState(false);
     const [focus, setFocus] = useState(false);
@@ -21,6 +21,19 @@ export const ReactionTextInput = ({ placeholder, label, value, onChange, index, 
 
     function handleChange(newvalue) {
         onChange(newvalue, index);
+    }
+
+    function handlefocus() {
+        setFocus(true);
+        if (setOnFocus) {
+            setOnFocus(true);
+        }
+    }
+    function handleLeaveFocus() {
+        setFocus(false)
+        if (setOnFocus) {
+            setOnFocus(false);
+        }
     }
 
 
@@ -41,8 +54,8 @@ export const ReactionTextInput = ({ placeholder, label, value, onChange, index, 
                 value={value}
                 placeholder={placeholder ? placeholder : "Enter..."}
                 textContentType={textContentType ? textContentType : 'none'}
-                onFocus={() => setFocus(true)}
-                onEndEditing={() => setFocus(false)}
+                onFocus={handlefocus}
+                onEndEditing={handleLeaveFocus}
             // onBlur={() => onBlur}
             />
         </View>
