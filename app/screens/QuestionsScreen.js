@@ -33,6 +33,7 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
     const [showProjectSettings, setShowProjectSettings] = useState(false);
     const [showDesignSettings, setShowDesignSettings] = useState(false);
     const [disableButtons, setDisableButtons] = useState(false);
+    const [focusedQuestion, setFocusedQuestion] = useState(false);
 
     function handleNewQuestion(question) {
         let array = [...questions];
@@ -138,8 +139,8 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
                 <Pressable style={styles.actionButton} onPress={() => { setShowProjectSettings(!showProjectSettings); setDisableButtons(true) }}><View style={styles.bottomButtons}><Text style={styles.text}>survey settings</Text><IonIcons name='chevron-down' size={20} style={{ color: '#15BCC7', }}></IonIcons></View></Pressable>
             </View>
 
-            {!showOptions && <ScrollView>
-                {questions.map((question, index) => <Question key={index} onUpdateQuestion={handleUpdateQuestion} question={question} questionIndex={index} active={question.id === activeQuestionId} setActive={setActiveQuestionId} setShowSettings={setShowOptions} showSettings={showOptions}></Question>)}
+            {!showOptions && <ScrollView style={focusedQuestion ? styles.questionContainerFocus : styles.questionContainer}>
+                {questions.map((question, index) => <Question key={index} setOnFocus={setFocusedQuestion} focused={focusedQuestion} onUpdateQuestion={handleUpdateQuestion} question={question} questionIndex={index} active={question.id === activeQuestionId} setActive={setActiveQuestionId} setShowSettings={setShowOptions} showSettings={showOptions}></Question>)}
             </ScrollView>}
             {showOptions && <View style={styles.optionsActive}><ScrollView >{displayActiveQuestion()}</ScrollView></View>}
             {!showOptions && <><View style={styles.bottomButtons}>
@@ -158,11 +159,13 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
             {activeQuestionId && <QuestionOptionsModal show={showOptions} setShow={setShowOptions} currQuestion={activeQuestion()} saveQuestion={handleSaveQuestion} changeType={handleChangeType} deleteQuestion={deleteQuestionAlert}></QuestionOptionsModal>}
             {showProjectSettings && <View style={styles.settingsContainer}><ProjectSettings setShowSettings={setShowProjectSettings} project={project} saveChanges={saveProjectSettings} setDisable={setDisableButtons}></ProjectSettings></View>}
             {showDesignSettings && <View style={styles.settingsContainer}><DesignSettings setShowSettings={setShowDesignSettings} project={project} saveChanges={saveProjectSettings} setDisable={setDisableButtons}></DesignSettings></View>}
-            {(showProjectSettings || showDesignSettings || showNewQuestion) && <BlurView
+            {(showProjectSettings || showDesignSettings || showNewQuestion || focusedQuestion) && <BlurView
                 // viewRef={viewRef}
                 style={styles.blurViewStyle}
                 blurRadius={2}
                 blurAmount={1}
+                onTouchEnd={(() => setFocusedQuestion(false))}
+                // onTouchEndCapture={(() => setFocusedQuestion(false))}
             // blurType={blurType}
             // Additional available on Android
             // blurRadius={20}
@@ -188,7 +191,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         // alignItems: 'center',
-        // justifyContent: 'center',
+        // justifyContent: 'space-between',
         // backgroundColor: '#EFEFEF',
         backgroundColor: '#B5E1DF',
         paddingBottom: 5
@@ -269,5 +272,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#EFEFEF',
         width: 370,
         zIndex: 1
+    },
+    questionContainerFocus: {
+        maxHeight: 390,
+        // minHeight: 200,
+        zIndex: 1,
+        // borderWidth: 3,
+    },
+    questionContainer: {
+        zIndex: 1,
     }
 });

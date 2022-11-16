@@ -6,7 +6,7 @@
 
 //External imports
 import React, { useState } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import { ReactionActiveTextInput } from '../TextInput/ReactionActiveTextInput';
 import { MultipleChoiceQuestion } from './Types/MutlipleChoiceQuestion';
@@ -14,14 +14,15 @@ import { ScaleQuestion } from './Types/ScaleQuestion';
 import { TextQuestion } from './Types/TextQuestion';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import { BlurView } from '@react-native-community/blur';
+import { ButtonGeneric } from '../Buttons/ButtonGeneric';
 // import { Text } from 'react-native';
 
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const Question = ({ question, questionIndex, active, setActive, onUpdateQuestion, setShowSettings, showSettings }) => {
+export const Question = ({ question, questionIndex, active, setActive, onUpdateQuestion, setShowSettings, showSettings, setOnFocus, focused }) => {
 
-    const [focused, setOnFocus] = useState(false);
+    // const [focused, setOnFocus] = useState(false);
     function handleUpdateQuestion(subQuestion) {
         let temp = { ...question };
         if (temp.type === "MultipleChoice") {
@@ -51,9 +52,24 @@ export const Question = ({ question, questionIndex, active, setActive, onUpdateQ
 
     return (
         <>
-            <Pressable onPress={() => handleSetActive()} style={focused ? styles.focusedContainer : ''} >
+            {focused && active &&
+                <>
+                    <Pressable onPress={() => handleSetActive()}>
+                        <View style={active ? styles.sectionContainerActive : styles.sectionContainer}>
+                            <ReactionActiveTextInput value={question.name} onChange={handleUpdateName} active={active} label={'Question'}>{question.name}</ReactionActiveTextInput>
+                            <ReactionActiveTextInput italics value={question.description} onChange={handleUpdateInstructions} active={active} label={'Instructions'}>{question.name}</ReactionActiveTextInput>
+                            {question.type == "Text" && <TextQuestion active={active} textQuestion={question.textQuestion}></TextQuestion>}
+                            {question.type == "NumberScale" && <ScaleQuestion active={active} scaleQuestion={question.scaleQuestion}></ScaleQuestion>}
+                            {question.type == "MultipleChoice" && <MultipleChoiceQuestion active={active} updateQuestion={handleUpdateQuestion} choiceQuestion={question.choiceQuestion}></MultipleChoiceQuestion>}
+                            <Pressable style={styles.settingIcon} onPress={() => setOnFocus(false)}><IonIcons name='close' color={'#616565'} size={20}></IonIcons></Pressable>
+
+                        </View>
+                    </Pressable>
+                    {/* <View style={{ paddingHorizontal: 50 }}><ButtonGeneric title={'Close'} onPress={() => setOnFocus(false)}></ButtonGeneric></View> */}
+                </>}
+            {!focused && <Pressable onPress={() => handleSetActive()} >
                 <View style={active ? styles.sectionContainerActive : styles.sectionContainer}>
-                    <ReactionActiveTextInput setOnFocus={setOnFocus} focus={focused} value={question.name} onChange={handleUpdateName} active={active} label={'Question'}>{question.name}</ReactionActiveTextInput>
+                    <ReactionActiveTextInput setOnFocus={setOnFocus} value={question.name} onChange={handleUpdateName} active={active} label={'Question'}>{question.name}</ReactionActiveTextInput>
                     <ReactionActiveTextInput setOnFocus={setOnFocus} italics value={question.description} onChange={handleUpdateInstructions} active={active} label={'Instructions'}>{question.name}</ReactionActiveTextInput>
                     {question.type == "Text" && <TextQuestion active={active} textQuestion={question.textQuestion}></TextQuestion>}
                     {question.type == "NumberScale" && <ScaleQuestion active={active} scaleQuestion={question.scaleQuestion}></ScaleQuestion>}
@@ -61,15 +77,14 @@ export const Question = ({ question, questionIndex, active, setActive, onUpdateQ
                     <Pressable style={styles.settingIcon} onPress={() => { setActive(question.id); setShowSettings(!showSettings); }} title='Create Survey'><IonIcons name='cog' color={'#616565'} size={20}></IonIcons></Pressable>
 
                 </View>
-            </Pressable>
-            {focused && <BlurView
+            </Pressable>}
+            {/* {focused && <BlurView
                 style={styles.blurViewStyle}
                 blurRadius={2}
                 blurAmount={1}
-            />}
+            />} */}
         </>
     );
-
 };
 
 const styles = StyleSheet.create({
@@ -97,8 +112,8 @@ const styles = StyleSheet.create({
     focusedContainer: {
         position: 'absolute',
         width: '100%',
-        zIndex: 6,
-        top: 10,
+        // zIndex: 6,
+        top: 0,
         // left: 0,
         // alignItems: 'center',
         // justifyContent: 'center',
@@ -145,6 +160,6 @@ const styles = StyleSheet.create({
         top: 0,
         height: 900,
         width: 500,
-        zIndex: 5,
+        zIndex: 0,
     },
 });

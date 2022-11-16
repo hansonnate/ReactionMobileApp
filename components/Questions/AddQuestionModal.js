@@ -6,14 +6,14 @@
 
 //External imports
 import React, { useState } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import { ButtonGeneric } from '../Buttons/ButtonGeneric';
 import { ReactionSelectInput } from '../SelectInput/ReactionSelectInput';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import { shortId } from '../../HelperFunctions';
-import { TextQuestion } from './Types/TextQuestion';
-import { ScaleQuestion } from './Types/ScaleQuestion';
+// import { TextQuestion } from './Types/TextQuestion';
+// import { ScaleQuestion } from './Types/ScaleQuestion';
 import { MultipleChoiceQuestion } from './Types/MutlipleChoiceQuestion';
 import { ReactionActiveTextInput } from '../TextInput/ReactionActiveTextInput';
 
@@ -131,7 +131,7 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
 
     return (
         <>
-            {show && <View style={styles.absoluteContainer}>
+            {show && <ScrollView style={styles.absoluteContainer}>
                 <View style={styles.sectionContainer}>
                     <Pressable onPress={() => setShow(false)} style={styles.closeIcon}><IonIcons name='close' size={20} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
                     <Text style={styles.heading}>Create New Question</Text>
@@ -145,7 +145,7 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
                     </View>
                     <ButtonGeneric title={'Create Question'} onPress={() => handleCreateQuestion()}></ButtonGeneric>
                 </View>
-            </View>}
+            </ScrollView>}
         </>
     );
 
@@ -154,9 +154,10 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
 const styles = StyleSheet.create({
     absoluteContainer: {
         position: 'absolute',
-        top: 160,
+        top: 10,
         width: '100%',
         zIndex: 1,
+        height: 440,
         // backgroundColor: 'black',
     },
     sectionContainer: {
