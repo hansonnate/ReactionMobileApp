@@ -15,6 +15,7 @@ import IonIcons from 'react-native-vector-icons/Ionicons';
 import { ButtonGeneric } from '../../components/Buttons/ButtonGeneric';
 import { ReactionTable } from '../../components/Table/ReactionTable';
 import { ProjectSettings } from '../../components/ProjectSettings/ProjectSettings';
+import AnimatedLottieView from 'lottie-react-native';
 
 export const ResultsScreen = ({ navigation }) => {
     //onPress={() => navigation.navigate('Details')}
@@ -160,11 +161,15 @@ export const ResultsScreen = ({ navigation }) => {
 
     return (
         <View style={styles.sectionContainer}>
-            <View style={styles.buttonsContainer}>
+            {/* <View style={styles.buttonsContainer}>
                 <Text style={{ fontSize: 23, color: '#616565', textAlign: 'center', width: '100%'}}>Click on survey to see live results!</Text>
             </View>
-            <ReactionTable noSettings headers={headers} items={projects} showSettings={showSettings} setShowSettings={setShowSettings} setActive={setActiveProject} activeItem={activeProject}></ReactionTable>
-
+            <ReactionTable noSettings headers={headers} items={projects} showSettings={showSettings} setShowSettings={setShowSettings} setActive={setActiveProject} activeItem={activeProject}></ReactionTable> */}
+            <AnimatedLottieView
+                autoPlay
+                loop
+                source={require('../../assets/construction.json')}
+            />
         </View>
     );
 

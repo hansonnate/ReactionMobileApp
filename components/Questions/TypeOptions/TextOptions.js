@@ -39,7 +39,7 @@ export const TextOptions = ({question, setQuestion}) => {
         <View style={{ paddingBottom: 10 }}>
             <View style={styles.switchContainer}>
                 <View style={styles.container}><ReactionTextInput label={'Placeholder'} textContentType={'oneTimeCode'} value={placeholder} onChange={handleSetPlaceholder}></ReactionTextInput></View>
-                <View style={styles.container}><ReactionTextInput label={'Max Character Length'} textContentType={'oneTimeCode'} value={maxCharacters.toString()} onChange={handleSetLength}></ReactionTextInput></View>
+                <View style={styles.container}><ReactionTextInput keyboardType={'numeric'} label={'Max Character Length'} textContentType={'oneTimeCode'} value={maxCharacters.toString()} onChange={handleSetLength}></ReactionTextInput></View>
             </View>
             
         </View>

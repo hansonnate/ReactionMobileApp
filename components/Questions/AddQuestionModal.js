@@ -16,11 +16,16 @@ import { shortId } from '../../HelperFunctions';
 // import { ScaleQuestion } from './Types/ScaleQuestion';
 import { MultipleChoiceQuestion } from './Types/MutlipleChoiceQuestion';
 import { ReactionActiveTextInput } from '../TextInput/ReactionActiveTextInput';
+import { NumberScaleOptions } from './TypeOptions/NumberScaleOptions';
+import { MultipleChoiceOption } from './TypeOptions/MultipleChoiceOptions';
+import { TextOptions } from './TypeOptions/TextOptions';
+import { ScaleQuestion } from './Types/ScaleQuestion';
+import { TextQuestion } from './Types/TextQuestion';
 
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
+export const AddQuestionModal = ({ show, setShow, createQuestion, keyboardOpen }) => {
     const questionTypes = [
         { id: 0, name: "Number Scale" },
         { id: 1, name: "Multiple Choice" },
@@ -56,7 +61,7 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
     });
 
     function handleCreateQuestion() {
-        
+
         if (question.name === '') {
             setNoName(true);
             return;
@@ -120,7 +125,13 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
     function handleUpdateChoices(subQuestion) {
         let temp = { ...question };
         if (temp.type === "MultipleChoice") {
-            temp.choiceQuestion = subQuestion;
+            temp.choiceQuestion = {
+                isMultiSelect: false,
+                isRandomized: false,
+                hasOtherOption: false,
+                otherOptionLabel: "Other",
+                choices: [""],
+            };
         } else if (temp.type === "NumberScale") {
             temp.scaleQuestion = subQuestion;
         } else if (temp.type === "Text") {
@@ -129,19 +140,63 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
         setQuestion(temp);
     };
 
+    function handleUpdateOptions(options) {
+        console.log(options);
+    }
+
+    function handleChangeType(type) {
+        console.log(type);
+        setChosenType(type);
+        let temp = { ...question };
+        if (type === "Multiple Choice") {
+            temp.type = "MultipleChoice";
+            temp.choiceQuestion = {
+                isMultiSelect: false,
+                isRandomized: false,
+                hasOtherOption: false,
+                otherOptionLabel: "Other",
+                choices: [""],
+            };
+        } else if (type === "Number Scale") {
+            temp.type = "NumberScale";
+            temp.scaleQuestion = {
+                min: 0,
+                minDescription: "",
+                max: 5,
+                maxDescription: "",
+                step: 1,
+            };
+        } else if (type === "Text") {
+            temp.type = "Text";
+            temp.textQuestion = {
+                placeholder: "",
+                maxLength: 500,
+            };
+        }
+        setQuestion(temp);
+    }
+
     return (
         <>
-            {show && <ScrollView style={styles.absoluteContainer}>
+            {show && <ScrollView style={keyboardOpen ? styles.keyboardContainer : styles.absoluteContainer}>
                 <View style={styles.sectionContainer}>
                     <Pressable onPress={() => setShow(false)} style={styles.closeIcon}><IonIcons name='close' size={20} style={{ color: '#A3A4A8' }}></IonIcons></Pressable>
                     <Text style={styles.heading}>Create New Question</Text>
                     <View style={{ paddingBottom: 10 }}>
-                        <ReactionSelectInput chooseList={questionTypes} chosenSingle={chosenType} setChosenSingle={setChosenType} label='Choose Question Type'></ReactionSelectInput>
+                        <ReactionSelectInput chooseList={questionTypes} chosenSingle={chosenType} setChosenSingle={handleChangeType} label='Choose Question Type'></ReactionSelectInput>
                         <ReactionActiveTextInput value={question.name} active={true} label={'Question Name'} error={noName} errorMessage='Type Question Name' onChange={handleUpdateName}>{question.name}</ReactionActiveTextInput>
                         <ReactionActiveTextInput italics value={question.description} active={true} label={'Instructions'} onChange={handleUpdateInstructions}>{question.name}</ReactionActiveTextInput>
-                        {/* {chosenType == "Text" && <TextQuestion new active={true} textQuestion={question.textQuestion}></TextQuestion>}
-                        {chosenType == "Number Scale" && <ScaleQuestion active={true} scaleQuestion={question.scaleQuestion}></ScaleQuestion>} */}
+                        {chosenType == "Text" && <TextQuestion new active={true} textQuestion={question.textQuestion}></TextQuestion>}
+                        {chosenType == "Number Scale" && <ScaleQuestion active={true} scaleQuestion={question.scaleQuestion}></ScaleQuestion>}
                         {chosenType == "Multiple Choice" && <MultipleChoiceQuestion active={true} choiceQuestion={question.choiceQuestion} updateQuestion={handleUpdateChoices}></MultipleChoiceQuestion>}
+
+                        <View style={{ height: 10 }}></View>
+                        {question.type === 'MultipleChoice' && <MultipleChoiceOption question={question} setQuestion={handleUpdateOptions}></MultipleChoiceOption>}
+                        {question.type === 'NumberScale' && <NumberScaleOptions question={question} setQuestion={handleUpdateOptions}></NumberScaleOptions>}
+                        {question.type === 'Text' && <TextOptions question={question} setQuestion={handleUpdateOptions}></TextOptions>}
+
+                        {/* <View style={{ paddingTop: 10 }}><ButtonGeneric title={'Save Changes'} onPress={() => setActive('')}></ButtonGeneric></View> */}
+                        {/* <View style={styles.bottomButtons}><ButtonPil title={'Copy Question'}></ButtonPill><ButtonPill title={'Delete Question'} onPress={deleteQuestion}></ButtonPill></View> */}
                     </View>
                     <ButtonGeneric title={'Create Question'} onPress={() => handleCreateQuestion()}></ButtonGeneric>
                 </View>
@@ -154,14 +209,24 @@ export const AddQuestionModal = ({ show, setShow, createQuestion }) => {
 const styles = StyleSheet.create({
     absoluteContainer: {
         position: 'absolute',
+        width: '100%',
+        zIndex: 1,
+        height: 715,
+        // borderWidth: 3,
+
+        // backgroundColor: 'black',
+    },
+    keyboardContainer: {
+        position: 'absolute',
         top: 10,
         width: '100%',
         zIndex: 1,
         height: 440,
+        // borderWidth: 3,
         // backgroundColor: 'black',
     },
     sectionContainer: {
-        marginHorizontal: 10,
+        margin: 10,
         // height: 100,
         backgroundColor: 'white',
         borderWidth: 3,

@@ -8,21 +8,17 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, ScrollView, Alert } from 'react-native';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
-import { ButtonAddMinus } from '../../components/Buttons/ButtonAddMinus';
-// import { ButtonPill } from '../../components/Buttons/ButtonPill';
-import { ButtonPillBack } from '../../components/Buttons/ButtonPillBack';
-import { Question } from '../../components/Questions/Question';
 import IonIcons from 'react-native-vector-icons/Ionicons';
-import { AddQuestionModal } from '../../components/Questions/AddQuestionModal';
-import { QuestionOptionsModal } from '../../components/Questions/QuestionOptionsModal';
-import { ProjectSettings } from '../../components/ProjectSettings/ProjectSettings';
-import { DesignSettings } from '../../components/DesignSettings/DesignSettings';
 import { BlurView } from '@react-native-community/blur';
 import KeyboardListener from 'react-native-keyboard-listener';
-// import { Text } from 'react-native';
 
 //Internal imports
-// import styles from 'Navbar.module.scss'
+import { ButtonAddMinus } from '../../components/Buttons/ButtonAddMinus';
+import { ButtonPillBack } from '../../components/Buttons/ButtonPillBack';
+import { Question } from '../../components/Questions/Question';
+import { AddQuestionModal } from '../../components/Questions/AddQuestionModal';
+import { ProjectSettings } from '../../components/ProjectSettings/ProjectSettings';
+import { DesignSettings } from '../../components/DesignSettings/DesignSettings';
 
 export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSettings }) => {
 
@@ -49,9 +45,9 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
         setQuestions(array);
     }
 
-    function activeQuestion() {
-        return questions.find((q) => q.id === activeQuestionId);
-    }
+    // function activeQuestion() {
+    //     return questions.find((q) => q.id === activeQuestionId);
+    // }
 
     function handleSaveQuestion(updatedQuestion) {
         console.log(updatedQuestion);
@@ -100,22 +96,22 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
         }
     }
 
-    function displayActiveQuestion() {
-        let index = questions.findIndex((q) => q.id === activeQuestionId);
-        let question = questions[index];
+    // function displayActiveQuestion() {
+    //     let index = questions.findIndex((q) => q.id === activeQuestionId);
+    //     let question = questions[index];
 
-        return (
-            <Question onUpdateQuestion={handleUpdateQuestion} question={question} questionIndex={index} active={question.id === activeQuestionId} setActive={setActiveQuestionId}></Question>
-        );
-    }
+    //     return (
+    //         <Question onUpdateQuestion={handleUpdateQuestion} question={question} questionIndex={index} active={question.id === activeQuestionId} setActive={setActiveQuestionId}></Question>
+    //     );
+    // }
 
     function handleDeleteQuestion() {
-        setShowOptions(false);
         console.log('Yup');
         let array = [...questions];
         let index = questions.findIndex((q) => q.id === activeQuestionId);
         array.splice(index, 1);
         setQuestions(array);
+        setFocusedQuestion(false);
     }
 
     function deleteQuestionAlert() {
@@ -150,10 +146,9 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
                 <Pressable style={styles.actionButton} onPress={() => { setShowProjectSettings(!showProjectSettings); setDisableButtons(true) }}><View style={styles.bottomButtons}><Text style={styles.text}>survey settings</Text><IonIcons name='chevron-down' size={20} style={{ color: '#15BCC7', }}></IonIcons></View></Pressable>
             </View>
 
-            {!showOptions && <ScrollView style={keyboardOpen ? styles.questionContainerFocus : styles.questionContainer}>
+            <ScrollView style={keyboardOpen ? styles.questionContainerFocus : styles.questionContainer}>
                 {questions.map((question, index) => <View key={index}>
-                    {question.id === activeQuestionId && <QuestionOptionsModal show={true} setShow={setShowOptions} currQuestion={activeQuestion()} saveQuestion={handleSaveQuestion} changeType={handleChangeType} deleteQuestion={deleteQuestionAlert}></QuestionOptionsModal>}
-                    {focusedQuestion && question.id === activeQuestionId &&
+                    {focusedQuestion && question.id === activeQuestionId && !showNewQuestion &&
                         <Question
                             setOnFocus={setFocusedQuestion}
                             focused={focusedQuestion}
@@ -162,11 +157,12 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
                             questionIndex={index}
                             active={question.id === activeQuestionId}
                             setActive={handleSetActive}
-                            setShowSettings={setShowOptions}
-                            showSettings={showOptions}
+                            saveQuestion={handleSaveQuestion}
+                            changeType={handleChangeType}
+                            deleteQuestion={deleteQuestionAlert}
                         >
                         </Question>}
-                    {!focusedQuestion &&
+                    {!focusedQuestion && !showNewQuestion &&
                         <Question
                             setOnFocus={setFocusedQuestion}
                             focused={focusedQuestion}
@@ -175,17 +171,13 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
                             questionIndex={index}
                             active={question.id === activeQuestionId}
                             setActive={handleSetActive}
-                            setShowSettings={setShowOptions}
-                            showSettings={showOptions}
                         >
                         </Question>}
-
                 </View>
                 )}
-            </ScrollView>}
-            {showOptions && <View style={styles.optionsActive}><ScrollView >{displayActiveQuestion()}</ScrollView></View>}
-            {!showOptions && <><View style={styles.bottomButtons}>
-                <ButtonAddMinus disable={disableButtons} title={'question'} plus onPress={() => setShowNewQuestion(true)} shadow></ButtonAddMinus>
+            </ScrollView>
+            <View style={styles.bottomButtons}>
+                <ButtonAddMinus disable={disableButtons} title={'question'} plus onPress={() => {setShowNewQuestion(true);}} shadow></ButtonAddMinus>
                 <Pressable disabled={disableButtons} style={styles.actionButton} onPress={() => setShowDesignSettings(!showDesignSettings)}><View style={styles.bottomButtons}><Text style={styles.text}>design settings</Text><IonIcons name='chevron-down' size={20} style={{ color: '#15BCC7', }}></IonIcons></View></Pressable>
             </View>
                 {/* <View style={styles.bottomButtons}>
@@ -195,22 +187,14 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
                     <Pressable style={styles.buttonStyle} disabled={disableButtons}><Text style={{ color: '#15BCC7', fontWeight: 'bold' }}>1</Text></Pressable>
                     <Pressable style={styles.buttonStyle} disabled={disableButtons}><IonIcons name='chevron-forward' size={20} style={{ color: '#15BCC7', }}></IonIcons></Pressable>
                 </View> */}
-            </>}
-            <AddQuestionModal show={showNewQuestion} setShow={setShowNewQuestion} createQuestion={handleNewQuestion}></AddQuestionModal>
+            
+            <AddQuestionModal show={showNewQuestion} setShow={setShowNewQuestion} createQuestion={handleNewQuestion} keyboardOpen={keyboardOpen}></AddQuestionModal>
             {showProjectSettings && <View style={styles.settingsContainer}><ProjectSettings setShowSettings={setShowProjectSettings} project={project} saveChanges={saveProjectSettings} setDisable={setDisableButtons}></ProjectSettings></View>}
             {showDesignSettings && <View style={styles.settingsContainer}><DesignSettings setShowSettings={setShowDesignSettings} project={project} saveChanges={saveProjectSettings} setDisable={setDisableButtons}></DesignSettings></View>}
             {(showProjectSettings || showDesignSettings || showNewQuestion || focusedQuestion) && <BlurView
-                // viewRef={viewRef}
                 style={styles.blurViewStyle}
                 blurRadius={2}
                 blurAmount={1}
-            // onTouchEnd={(() => setFocusedQuestion(false))}
-            // onTouchEndCapture={(() => setFocusedQuestion(false))}
-            // blurType={blurType}
-            // Additional available on Android
-            // blurRadius={20}
-            // downsampleFactor={10}
-            // overlayColor={'rgba(0, 0, 255, .6)'}
             />}
         </View>
     );

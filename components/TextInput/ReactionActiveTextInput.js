@@ -12,7 +12,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const ReactionActiveTextInput = ({ placeholder, label, value, onChange, active, italics, error, errorMessage, setOnFocus }) => {
+export const ReactionActiveTextInput = ({ placeholder, label, value, onChange, active, italics, error, errorMessage, setOnFocus, multiline, keyboardType }) => {
     // const [text, onChangeText] = useState(value);
     // const [changed, setChanged] = useState(false);
     const [focus, setFocus] = useState(false);
@@ -52,7 +52,8 @@ export const ReactionActiveTextInput = ({ placeholder, label, value, onChange, a
                 placeholder={placeholder ? placeholder : "Enter..."}
                 onFocus={handlefocus}
                 onEndEditing={handleLeaveFocus}
-            // keyboardType="number-pad"
+                multiline={multiline}
+                keyboardType={keyboardType ? keyboardType : ''}
             />}
             {!active && <Text
                 style={italics ? styles.italics : styles.input}
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
         paddingVertical: 2.5,
     },
     inputActive: {
-        height: 40,
+        // height: 40,
         borderWidth: 2,
         borderRadius: 5,
         borderColor: "#E9E9E9",
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     inputActiveFocus: {
-        height: 40,
+        // height: 40,
         borderWidth: 2,
         borderRadius: 5,
         borderColor: "#2A627C",

@@ -93,10 +93,10 @@ export const ProjectSettings = ({ setShowSettings, project, saveChanges, setDisa
             <ScrollView style={{paddingTop: 5}}>
                 <ReactionTextInput label={"Survey Name"} placeholder={"Survey Name"} value={name} onChange={setName}></ReactionTextInput>
                 <ReactionTextInput label={"Description"} placeholder={"Description"} value={description} onChange={setDescription}></ReactionTextInput>
-                <ReactionSelectInput isMultiple chosenList={selectedTags} chooseList={tags} label={"Tags"} placeholder={"No Tags Chosen"} value={project?.description} setChosen={onSelectedItemsChange} setChooseList={setTags}></ReactionSelectInput>
+                {/* <ReactionSelectInput isMultiple chosenList={selectedTags} chooseList={tags} label={"Tags"} placeholder={"No Tags Chosen"} value={project?.description} setChosen={onSelectedItemsChange} setChooseList={setTags}></ReactionSelectInput>
                 <ReactionSelectInput isMultiple chosenList={selectedAccessGroups} chooseList={accessGroups} label={"Access Groups"} placeholder={"No Access Groups Chosen"} value={project?.description} setChosen={onSelectedAGChange} setChooseList={setAccessGroups}></ReactionSelectInput>
                 <ReactionSelectInput isMultiple chosenList={selectedDefLang} chooseList={defaultLanguages} label={"Default Languages"} placeholder={"No Default Languages Chosen"} value={project?.description} setChosen={onSelectedDefLangChange} setChooseList={setDefaultLanguages}></ReactionSelectInput>
-                <ReactionSelectInput isMultiple chosenList={selectedSupLang} chooseList={supportedLanguages} label={"Supported Languages"} placeholder={"No Supported Languages Chosen"} value={project?.description} setChosen={onSelectedSupLangChange} setChooseList={setSupportedLanguages}></ReactionSelectInput>
+                <ReactionSelectInput isMultiple chosenList={selectedSupLang} chooseList={supportedLanguages} label={"Supported Languages"} placeholder={"No Supported Languages Chosen"} value={project?.description} setChosen={onSelectedSupLangChange} setChooseList={setSupportedLanguages}></ReactionSelectInput> */}
                 <ReactionSelectInput chosenSingle={status} label='Status' setChosenSingle={setStatus} chooseList={statuss}></ReactionSelectInput> 
                 <View style={{ paddingHorizontal: 60, paddingTop: 10 }}><ButtonGeneric onPress={() => { handleSaveChanges(); setShowSettings(false); }} title='Save Changes'></ButtonGeneric></View>
                 <View style={styles.bottomButtons}>

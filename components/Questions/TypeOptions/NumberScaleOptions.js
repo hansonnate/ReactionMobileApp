@@ -56,9 +56,9 @@ export const NumberScaleOptions = ({question, setQuestion}) => {
     return (
         <View style={{ paddingBottom: 10 }}>
             <View style={styles.switchContainer}>
-            <View style={styles.container}><ReactionTextInput label={'Min'} textContentType={'oneTimeCode'} value={min.toString()} onChange={handleSetMin}></ReactionTextInput></View>
-                <View style={styles.container}><ReactionTextInput label={'Max'} textContentType={'oneTimeCode'} value={max.toString()} onChange={handleSetMax}></ReactionTextInput></View>
-                <View style={styles.container}><ReactionTextInput label={'Step'} textContentType={'oneTimeCode'} value={step.toString()} onChange={handleSetStep}></ReactionTextInput></View>
+            <View style={styles.container}><ReactionTextInput keyboardType={'numeric'} label={'Min'} textContentType={'oneTimeCode'} value={min.toString()} onChange={handleSetMin}></ReactionTextInput></View>
+                <View style={styles.container}><ReactionTextInput keyboardType={'numeric'} label={'Max'} textContentType={'oneTimeCode'} value={max.toString()} onChange={handleSetMax}></ReactionTextInput></View>
+                <View style={styles.container}><ReactionTextInput keyboardType={'numeric'} label={'Step'} textContentType={'oneTimeCode'} value={step.toString()} onChange={handleSetStep}></ReactionTextInput></View>
             </View>
             
         </View>
