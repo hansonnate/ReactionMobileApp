@@ -18,6 +18,7 @@ import { QuestionOptionsModal } from '../../components/Questions/QuestionOptions
 import { ProjectSettings } from '../../components/ProjectSettings/ProjectSettings';
 import { DesignSettings } from '../../components/DesignSettings/DesignSettings';
 import { BlurView } from '@react-native-community/blur';
+import KeyboardListener from 'react-native-keyboard-listener';
 // import { Text } from 'react-native';
 
 //Internal imports
@@ -34,6 +35,7 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
     const [showDesignSettings, setShowDesignSettings] = useState(false);
     const [disableButtons, setDisableButtons] = useState(false);
     const [focusedQuestion, setFocusedQuestion] = useState(false);
+    const [keyboardOpen, setKeyBoardOpen] = useState(false);
 
     function handleNewQuestion(question) {
         let array = [...questions];
@@ -131,16 +133,55 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
         );
     }
 
+    function handleSetActive(id) {
+        setActiveQuestionId(id);
+        setFocusedQuestion(!focusedQuestion);
+    }
+
     return (
         <View style={styles.sectionContainer}>
+            <KeyboardListener
+                onWillShow={() => setKeyBoardOpen(true)}
+                onWillHide={() => setKeyBoardOpen(false)}
+            />
             {/* <View style={{display:'flex', flexDirection:'row', justifyContent:'center', paddingTop : 5}}><Text style={styles.heading}>{projectName}</Text></View> */}
             <View style={styles.topButtons}>
                 <ButtonPillBack title={'Surveys'} left onPress={() => setPage('Surveys')}></ButtonPillBack>
                 <Pressable style={styles.actionButton} onPress={() => { setShowProjectSettings(!showProjectSettings); setDisableButtons(true) }}><View style={styles.bottomButtons}><Text style={styles.text}>survey settings</Text><IonIcons name='chevron-down' size={20} style={{ color: '#15BCC7', }}></IonIcons></View></Pressable>
             </View>
 
-            {!showOptions && <ScrollView style={focusedQuestion ? styles.questionContainerFocus : styles.questionContainer}>
-                {questions.map((question, index) => <Question key={index} setOnFocus={setFocusedQuestion} focused={focusedQuestion} onUpdateQuestion={handleUpdateQuestion} question={question} questionIndex={index} active={question.id === activeQuestionId} setActive={setActiveQuestionId} setShowSettings={setShowOptions} showSettings={showOptions}></Question>)}
+            {!showOptions && <ScrollView style={keyboardOpen ? styles.questionContainerFocus : styles.questionContainer}>
+                {questions.map((question, index) => <View key={index}>
+                    {question.id === activeQuestionId && <QuestionOptionsModal show={true} setShow={setShowOptions} currQuestion={activeQuestion()} saveQuestion={handleSaveQuestion} changeType={handleChangeType} deleteQuestion={deleteQuestionAlert}></QuestionOptionsModal>}
+                    {focusedQuestion && question.id === activeQuestionId &&
+                        <Question
+                            setOnFocus={setFocusedQuestion}
+                            focused={focusedQuestion}
+                            onUpdateQuestion={handleUpdateQuestion}
+                            question={question}
+                            questionIndex={index}
+                            active={question.id === activeQuestionId}
+                            setActive={handleSetActive}
+                            setShowSettings={setShowOptions}
+                            showSettings={showOptions}
+                        >
+                        </Question>}
+                    {!focusedQuestion &&
+                        <Question
+                            setOnFocus={setFocusedQuestion}
+                            focused={focusedQuestion}
+                            onUpdateQuestion={handleUpdateQuestion}
+                            question={question}
+                            questionIndex={index}
+                            active={question.id === activeQuestionId}
+                            setActive={handleSetActive}
+                            setShowSettings={setShowOptions}
+                            showSettings={showOptions}
+                        >
+                        </Question>}
+
+                </View>
+                )}
             </ScrollView>}
             {showOptions && <View style={styles.optionsActive}><ScrollView >{displayActiveQuestion()}</ScrollView></View>}
             {!showOptions && <><View style={styles.bottomButtons}>
@@ -156,7 +197,6 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
                 </View> */}
             </>}
             <AddQuestionModal show={showNewQuestion} setShow={setShowNewQuestion} createQuestion={handleNewQuestion}></AddQuestionModal>
-            {activeQuestionId && <QuestionOptionsModal show={showOptions} setShow={setShowOptions} currQuestion={activeQuestion()} saveQuestion={handleSaveQuestion} changeType={handleChangeType} deleteQuestion={deleteQuestionAlert}></QuestionOptionsModal>}
             {showProjectSettings && <View style={styles.settingsContainer}><ProjectSettings setShowSettings={setShowProjectSettings} project={project} saveChanges={saveProjectSettings} setDisable={setDisableButtons}></ProjectSettings></View>}
             {showDesignSettings && <View style={styles.settingsContainer}><DesignSettings setShowSettings={setShowDesignSettings} project={project} saveChanges={saveProjectSettings} setDisable={setDisableButtons}></DesignSettings></View>}
             {(showProjectSettings || showDesignSettings || showNewQuestion || focusedQuestion) && <BlurView
@@ -164,8 +204,8 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
                 style={styles.blurViewStyle}
                 blurRadius={2}
                 blurAmount={1}
-                onTouchEnd={(() => setFocusedQuestion(false))}
-                // onTouchEndCapture={(() => setFocusedQuestion(false))}
+            // onTouchEnd={(() => setFocusedQuestion(false))}
+            // onTouchEndCapture={(() => setFocusedQuestion(false))}
             // blurType={blurType}
             // Additional available on Android
             // blurRadius={20}

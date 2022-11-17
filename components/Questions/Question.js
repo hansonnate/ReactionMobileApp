@@ -20,7 +20,7 @@ import { ButtonGeneric } from '../Buttons/ButtonGeneric';
 //Internal imports
 // import styles from 'Navbar.module.scss'
 
-export const Question = ({ question, questionIndex, active, setActive, onUpdateQuestion, setShowSettings, showSettings, setOnFocus, focused }) => {
+export const Question = ({ question, questionIndex, active, setActive, onUpdateQuestion, setShowSettings, showSettings }) => {
 
     // const [focused, setOnFocus] = useState(false);
     function handleUpdateQuestion(subQuestion) {
@@ -52,7 +52,7 @@ export const Question = ({ question, questionIndex, active, setActive, onUpdateQ
 
     return (
         <>
-            {focused && active &&
+            { active &&
                 <>
                     <Pressable onPress={() => handleSetActive()}>
                         <View style={active ? styles.sectionContainerActive : styles.sectionContainer}>
@@ -61,20 +61,20 @@ export const Question = ({ question, questionIndex, active, setActive, onUpdateQ
                             {question.type == "Text" && <TextQuestion active={active} textQuestion={question.textQuestion}></TextQuestion>}
                             {question.type == "NumberScale" && <ScaleQuestion active={active} scaleQuestion={question.scaleQuestion}></ScaleQuestion>}
                             {question.type == "MultipleChoice" && <MultipleChoiceQuestion active={active} updateQuestion={handleUpdateQuestion} choiceQuestion={question.choiceQuestion}></MultipleChoiceQuestion>}
-                            <Pressable style={styles.settingIcon} onPress={() => setOnFocus(false)}><IonIcons name='close' color={'#616565'} size={20}></IonIcons></Pressable>
+                            <Pressable style={styles.settingIcon} onPress={() => setActive('')}><IonIcons name='close' color={'#616565'} size={20}></IonIcons></Pressable>
 
                         </View>
                     </Pressable>
                     {/* <View style={{ paddingHorizontal: 50 }}><ButtonGeneric title={'Close'} onPress={() => setOnFocus(false)}></ButtonGeneric></View> */}
                 </>}
-            {!focused && <Pressable onPress={() => handleSetActive()} >
+            {!active && <Pressable onPress={() => handleSetActive()} >
                 <View style={active ? styles.sectionContainerActive : styles.sectionContainer}>
-                    <ReactionActiveTextInput setOnFocus={setOnFocus} value={question.name} onChange={handleUpdateName} active={active} label={'Question'}>{question.name}</ReactionActiveTextInput>
-                    <ReactionActiveTextInput setOnFocus={setOnFocus} italics value={question.description} onChange={handleUpdateInstructions} active={active} label={'Instructions'}>{question.name}</ReactionActiveTextInput>
+                    <ReactionActiveTextInput value={question.name} onChange={handleUpdateName} active={active} label={'Question'}>{question.name}</ReactionActiveTextInput>
+                    <ReactionActiveTextInput italics value={question.description} onChange={handleUpdateInstructions} active={active} label={'Instructions'}>{question.name}</ReactionActiveTextInput>
                     {question.type == "Text" && <TextQuestion active={active} textQuestion={question.textQuestion}></TextQuestion>}
                     {question.type == "NumberScale" && <ScaleQuestion active={active} scaleQuestion={question.scaleQuestion}></ScaleQuestion>}
-                    {question.type == "MultipleChoice" && <MultipleChoiceQuestion setOnFocus={setOnFocus} active={active} updateQuestion={handleUpdateQuestion} choiceQuestion={question.choiceQuestion}></MultipleChoiceQuestion>}
-                    <Pressable style={styles.settingIcon} onPress={() => { setActive(question.id); setShowSettings(!showSettings); }} title='Create Survey'><IonIcons name='cog' color={'#616565'} size={20}></IonIcons></Pressable>
+                    {question.type == "MultipleChoice" && <MultipleChoiceQuestion active={active} updateQuestion={handleUpdateQuestion} choiceQuestion={question.choiceQuestion}></MultipleChoiceQuestion>}
+                    {/* <Pressable style={styles.settingIcon} onPress={() => { setActive(question.id); setShowSettings(!showSettings); }} title='Create Survey'><IonIcons name='cog' color={'#616565'} size={20}></IonIcons></Pressable> */}
 
                 </View>
             </Pressable>}

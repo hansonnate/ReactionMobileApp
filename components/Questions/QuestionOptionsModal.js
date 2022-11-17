@@ -53,8 +53,9 @@ export const QuestionOptionsModal = ({ show, setShow, currQuestion, saveQuestion
 
 const styles = StyleSheet.create({
     absoluteContainer: {
-        position: 'absolute',
-        bottom: 10,
+        // position: 'absolute',
+        // bottom: 10,
+        paddingBottom: 10,
         width: '100%',
         // backgroundColor: 'black',
     },
