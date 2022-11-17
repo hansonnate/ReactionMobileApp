@@ -143,12 +143,12 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
             {/* <View style={{display:'flex', flexDirection:'row', justifyContent:'center', paddingTop : 5}}><Text style={styles.heading}>{projectName}</Text></View> */}
             <View style={styles.topButtons}>
                 <ButtonPillBack title={'Surveys'} left onPress={() => setPage('Surveys')}></ButtonPillBack>
-                <Pressable style={styles.actionButton} onPress={() => { setShowProjectSettings(!showProjectSettings); setDisableButtons(true) }}><View style={styles.bottomButtons}><Text style={styles.text}>survey settings</Text><IonIcons name='chevron-down' size={20} style={{ color: '#15BCC7', }}></IonIcons></View></Pressable>
+                <Pressable style={styles.actionButton} onPress={() => { setShowProjectSettings(!showProjectSettings); setDisableButtons(true); }}><View style={{display: 'flex', flexDirection: 'row'}}><Text style={styles.text}>survey settings</Text><IonIcons name='chevron-down' size={20} style={{ color: '#15BCC7', }}></IonIcons></View></Pressable>
             </View>
 
             <ScrollView style={keyboardOpen ? styles.questionContainerFocus : styles.questionContainer}>
                 {questions.map((question, index) => <View key={index}>
-                    {focusedQuestion && question.id === activeQuestionId && !showNewQuestion &&
+                    {focusedQuestion && question.id === activeQuestionId && !showNewQuestion && !showProjectSettings && !showDesignSettings &&
                         <Question
                             setOnFocus={setFocusedQuestion}
                             focused={focusedQuestion}
@@ -162,7 +162,7 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
                             deleteQuestion={deleteQuestionAlert}
                         >
                         </Question>}
-                    {!focusedQuestion && !showNewQuestion &&
+                    {!focusedQuestion && !showNewQuestion && !showProjectSettings && !showDesignSettings &&
                         <Question
                             setOnFocus={setFocusedQuestion}
                             focused={focusedQuestion}
@@ -178,7 +178,7 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
             </ScrollView>
             <View style={styles.bottomButtons}>
                 <ButtonAddMinus disable={disableButtons} title={'question'} plus onPress={() => {setShowNewQuestion(true);}} shadow></ButtonAddMinus>
-                <Pressable disabled={disableButtons} style={styles.actionButton} onPress={() => setShowDesignSettings(!showDesignSettings)}><View style={styles.bottomButtons}><Text style={styles.text}>design settings</Text><IonIcons name='chevron-down' size={20} style={{ color: '#15BCC7', }}></IonIcons></View></Pressable>
+                {/* <Pressable disabled={disableButtons} style={styles.actionButton} onPress={() => setShowDesignSettings(!showDesignSettings)}><View style={styles.bottomButtons}><Text style={styles.text}>design settings</Text><IonIcons name='chevron-down' size={20} style={{ color: '#15BCC7', }}></IonIcons></View></Pressable> */}
             </View>
                 {/* <View style={styles.bottomButtons}>
                     <ButtonAddMinus disable={disableButtons} title={'page'} minus onPress={() => alert('Removed Page')} shadow></ButtonAddMinus>
