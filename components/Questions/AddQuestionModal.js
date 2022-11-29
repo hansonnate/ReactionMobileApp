@@ -125,13 +125,7 @@ export const AddQuestionModal = ({ show, setShow, createQuestion, keyboardOpen }
     function handleUpdateChoices(subQuestion) {
         let temp = { ...question };
         if (temp.type === "MultipleChoice") {
-            temp.choiceQuestion = {
-                isMultiSelect: false,
-                isRandomized: false,
-                hasOtherOption: false,
-                otherOptionLabel: "Other",
-                choices: [""],
-            };
+            temp.choiceQuestion = subQuestion;
         } else if (temp.type === "NumberScale") {
             temp.scaleQuestion = subQuestion;
         } else if (temp.type === "Text") {

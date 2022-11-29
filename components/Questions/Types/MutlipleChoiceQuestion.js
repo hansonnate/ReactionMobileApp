@@ -20,8 +20,10 @@ export const MultipleChoiceQuestion = ({ active, choiceQuestion, updateQuestion,
     const [choice, setChoice] = useState(choiceQuestion);
 
     function addChoice() {
+        console.log("made it");
         let temp = choiceQuestion;
         temp.choices.push("");
+        console.log(temp);
         updateQuestion(temp);
     }
 
