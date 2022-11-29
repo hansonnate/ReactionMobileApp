@@ -493,7 +493,7 @@ export const CreateScreen = ({ navigation }) => {
         <ReactionTable rowClick={handleSurveyClick} headers={headers} items={projects} showSettings={showSettings} setShowSettings={setShowSettings} setActive={setActiveProject} activeItem={activeProject}></ReactionTable>
         <View style={styles.createButton}><ButtonGeneric shadow onPress={() => setShowCreate(true)} title='Create Survey'></ButtonGeneric></View>
         {showSettings && <ProjectSettings setShowSettings={setShowSettings} project={activeProject} saveChanges={handleSaveProjectChanges}></ProjectSettings>}
-        {showSettings && <BlurView
+        {(showSettings || showCreate) && <BlurView
           // viewRef={viewRef}
           style={styles.blurViewStyle}
           blurRadius={2}

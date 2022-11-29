@@ -177,7 +177,7 @@ export const QuestionsScreen = ({ initQuestions, setPage, project, saveProjectSe
                 )}
             </ScrollView>
             <View style={styles.bottomButtons}>
-                <ButtonAddMinus disable={disableButtons} title={'question'} plus onPress={() => {setShowNewQuestion(true);}} shadow></ButtonAddMinus>
+                <ButtonAddMinus disable={disableButtons} title={'question'} plus onPress={() => {setShowNewQuestion(true);}} ></ButtonAddMinus>
                 {/* <Pressable disabled={disableButtons} style={styles.actionButton} onPress={() => setShowDesignSettings(!showDesignSettings)}><View style={styles.bottomButtons}><Text style={styles.text}>design settings</Text><IonIcons name='chevron-down' size={20} style={{ color: '#15BCC7', }}></IonIcons></View></Pressable> */}
             </View>
                 {/* <View style={styles.bottomButtons}>
@@ -261,19 +261,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 2,
-        borderRadius: 5,
+        // borderWidth: 2,
+        borderRadius: 20,
         borderColor: '#E9E9E9',
         backgroundColor: 'white',
         width: 170,
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowOpacity: 0.32,
-        shadowRadius: 5.46,
-        maxHeight: 600,
-        elevation: 9,
+        // shadowOffset: {
+        //     width: 0,
+        //     height: 4,
+        // },
+        // shadowOpacity: 0.32,
+        // shadowRadius: 5.46,
+        // maxHeight: 600,
+        // elevation: 9,
     },
     text: {
         fontSize: 16,
